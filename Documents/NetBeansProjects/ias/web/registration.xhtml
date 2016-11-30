@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+    <h2>Регистрация нового пользователя</h2>
+</h:head>
+<h:body>
+    
+<h:form>
+    <h:panelGrid columns="2" cellpadding="5">
+        <p:outputLabel for="enp" value="ЕНП: " />
+        <p:inputMask id="enp" value="#{userReg.enp}" mask="9999 9999 9999 9999"/>
+ 
+        <p:outputLabel for="login" value="Login:" />
+        <p:inputText id="login" value="#{userReg.login}" />
+ 
+        <p:outputLabel for="password" value="Password:" />
+        <p:inputText id="password" value="#{userReg.password}"/>
+ 
+        <p:commandButton value="Очистить поля" type="reset" />
+        <p:commandButton value="Сохранить" immediate="true" action="#{userReg.submit()}"/>
+    </h:panelGrid>
+</h:form>
+</h:body>
+</html>

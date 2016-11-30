@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+
+    <h:body>
+<h:form>
+        <h1>Форма регистрации</h1>
+
+        <span style="display: inline">
+
+            <h:outputFormat value="Введите ЕНП"/>
+            <h:inputText value="#{userReg.enp}" required="true" />
+
+        </span>
+        <br/>
+        <span style="display: inline">
+
+            <h:outputFormat value="Введите login"/>
+            <h:inputText value="#{userReg.login}" id="form-login" required="true" />
+
+        </span>
+        <br/>
+        <span style="display: inline">
+
+            <h:outputFormat value="Введите password"/>
+            <h:inputText value="#{userReg.password}" id="form-pwd" required="true" />
+
+        </span>        
+</h:form>
+                    <h:message for="form-login" style="color:red" />
+            <br/>
+            <h:message for="form-pwd" style="color:red" />
+            <!--еще для енп хз как это работает + валидатор-->
+    </h:body>
+
+</html>
