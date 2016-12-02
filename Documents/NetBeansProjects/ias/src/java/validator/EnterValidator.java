@@ -9,8 +9,7 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-@ManagedBean
-@SessionScoped
+
 @FacesValidator("validator.EnterValidator")
 public class EnterValidator implements Validator {
 
