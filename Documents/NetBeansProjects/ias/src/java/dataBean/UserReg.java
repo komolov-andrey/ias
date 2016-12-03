@@ -1,6 +1,7 @@
-package data;
+package dataBean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -39,9 +40,10 @@ public class UserReg implements Serializable {
     }
 
     public String submit() {
+        
         //conn к бд с сохранением логина и пароля
         //если ок то ретёрн index
         //else registration.xhtml
-        return "index";
+        return "index?faces-redirect=true";
     }
 }
