@@ -10,9 +10,8 @@ import java.util.List;
 public class DataConn {
 
     ODatabaseDocumentTx db;
-    ArrayList listResult = new ArrayList();
     List<ODocument> result;
-    
+
     public DataConn() {
     }
 
@@ -22,9 +21,12 @@ public class DataConn {
         result = db.query(
                 new OSQLSynchQuery<ODocument>(sql));
     }
-    
-    public ArrayList queryField(String field){
+
+    public ArrayList queryField(String field) {
+
+        ArrayList listResult = new ArrayList();
         for (int i = 0; i < result.size(); i++) {
+
             listResult.add(result.get(i).field(field));
         }
         return listResult;
@@ -33,5 +35,4 @@ public class DataConn {
     public void closeConn() {
         db.close();
     }
-
 }

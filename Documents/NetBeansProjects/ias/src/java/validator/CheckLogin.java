@@ -21,7 +21,6 @@ public class CheckLogin implements Validator {
             throws ValidatorException {
 
         if (value.toString().length() == 0) {
-            //FacesMessage message = new FacesMessage("Введите Логин");
             FacesMessage message = new FacesMessage("Введите Логин");
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(message);
