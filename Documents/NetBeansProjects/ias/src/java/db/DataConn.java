@@ -1,7 +1,9 @@
 package db;
 
+import com.orientechnologies.orient.core.command.OCommandRequest;
 import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
 import com.orientechnologies.orient.core.record.impl.ODocument;
+import com.orientechnologies.orient.core.sql.OCommandSQL;
 import com.orientechnologies.orient.core.sql.query.OSQLQuery;
 import com.orientechnologies.orient.core.sql.query.OSQLSynchQuery;
 import java.util.ArrayList;
@@ -13,11 +15,12 @@ public class DataConn {
     List<ODocument> result;
 
     public DataConn() {
+        
+        db = new ODatabaseDocumentTx("remote:localhost/ias").open("admin", "admin");
     }
 
     public void qeuryRequest(String sql) {
 
-        db = new ODatabaseDocumentTx("remote:localhost/ias").open("admin", "admin");
         result = db.query(
                 new OSQLSynchQuery<ODocument>(sql));
     }
@@ -34,5 +37,10 @@ public class DataConn {
 
     public void closeConn() {
         db.close();
+    }
+    
+    public void qeuryRun(String sql) {
+
+        db.command(new OCommandSQL(sql)).execute();
     }
 }

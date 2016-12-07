@@ -21,10 +21,10 @@
                 </p:inputText>
                 
                 <p:outputLabel for="password" value="Password:" />
-                <p:inputText id="password" value="#{userReg.password}" required="true"/>
+                <p:password id="password" value="#{userReg.password}" required="true"/>
 
                 <p:commandButton value="Очистить поля" type="reset" />
-                <p:commandButton value="Save" update="growl" action="#{userReg.submit()}" /> 
+                <p:commandButton value="Сохранить" update="growl" action="#{userReg.submit()}" /> 
 
                 <p:growl id="growl" showDetail="true" sticky="false" showSummary="false"/>
                 

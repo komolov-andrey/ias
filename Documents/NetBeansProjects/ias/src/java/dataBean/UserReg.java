@@ -40,10 +40,21 @@ public class UserReg implements Serializable {
     }
 
     public String submit() {
+
+        //записать логин / пароль в БД
+        db.DataConn db = new db.DataConn();
+        db.qeuryRequest("select from Regs where enp = " + getEnp().replaceAll(" ", "") + ";");
         
-        //conn к бд с сохранением логина и пароля
-        //если ок то ретёрн index
-        //else registration.xhtml
+        ArrayList id_enp = db.queryField("@rid");
+        String s = id_enp.get(0).toString();
+        
+        db.qeuryRun("DELETE FROM Users WHERE id_regs = " + s + ";");
+
+        db.qeuryRun("INSERT INTO users (id_regs, login, pwd) VALUES ((select @rid from regs where enp = '"
+                + getEnp().replaceAll(" ", "") + "'), '" + getLogin() + "', '" + getPassword() + "');");
+
+        db.closeConn();
+
         return "index?faces-redirect=true";
     }
 }

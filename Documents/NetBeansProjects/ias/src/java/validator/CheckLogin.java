@@ -20,12 +20,22 @@ public class CheckLogin implements Validator {
     public void validate(FacesContext context, UIComponent component, Object value)
             throws ValidatorException {
 
+       //проверка логина с базы данных
         if (value.toString().length() == 0) {
-            FacesMessage message = new FacesMessage("Введите Логин");
+            FacesMessage message = new FacesMessage("Введите логин");
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(message);
+        } else {
+            db.DataConn db = new db.DataConn();
+            db.qeuryRequest("select login from users where login = '" + value.toString() + "';");
+            ArrayList login = db.queryField("login");
+            db.closeConn();
+            if (login.size() > 0) {
+                FacesMessage message = new FacesMessage("Логин занят");
+                message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                throw new ValidatorException(message);
+            }
         }
-
     }
 
 }
