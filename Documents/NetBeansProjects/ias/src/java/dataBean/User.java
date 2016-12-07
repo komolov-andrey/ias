@@ -17,10 +17,42 @@ public class User implements Serializable {
 
     private String username;
     private String password;
-    private static boolean isShow;
+    
+    private String id_regs;
+    private String id_doctor;
+    private String id_hosp;
+    private String id_cmo;
 
-    public boolean isIsShow() {
-        return isShow = true;
+    public String getId_regs() {
+        return id_regs;
+    }
+
+    public void setId_regs(String id_regs) {
+        this.id_regs = id_regs;
+    }
+
+    public String getId_doctor() {
+        return id_doctor;
+    }
+
+    public void setId_doctor(String id_doctor) {
+        this.id_doctor = id_doctor;
+    }
+
+    public String getId_hosp() {
+        return id_hosp;
+    }
+
+    public void setId_hosp(String id_hosp) {
+        this.id_hosp = id_hosp;
+    }
+
+    public String getId_cmo() {
+        return id_cmo;
+    }
+
+    public void setId_cmo(String id_cmo) {
+        this.id_cmo = id_cmo;
     }
 
     public String getUsername() {
@@ -57,15 +89,19 @@ public class User implements Serializable {
         if (login.size() == 1) {
             if ((login.get(0).equals(getUsername())) && (pwd.get(0).equals(getPassword()))) {
                 if (cmos.get(0) != null) {
+                    setId_cmo(cmos.get(0).toString());
                     return "cmo?faces-redirect=true";
                 }
                 if (user.get(0) != null) {
+                    setId_regs(user.get(0).toString());
                     return "client?faces-redirect=true";
                 }
                 if (doctor.get(0) != null) {
+                    setId_doctor(doctor.get(0).toString());
                     return "doctor?faces-redirect=true";
                 }
                 if (hospital.get(0) != null) {
+                    setId_hosp(hospital.get(0).toString());
                     return "hospital?faces-redirect=true";
                 }
                 if (admin.get(0).equals(true)) {
@@ -73,10 +109,11 @@ public class User implements Serializable {
                 }
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Неверное имя пользователя или пароль!"));
-            }}else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Неверное имя пользователя или пароль!"));
             }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Неверное имя пользователя или пароль!"));
+        }
 
-            return "";
+        return "";
     }
 }
