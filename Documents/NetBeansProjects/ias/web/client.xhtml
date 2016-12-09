@@ -1,12 +1,105 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Личный кабинет клиента</title>
+        <link href="css/client.css" rel="stylesheet" type="text/css" />
     </h:head>
     <h:body>
-        Hello from #{user.id_regs}
+        <div align="right">
+            <h2>Здравствуйте #{user.id_regs}</h2>
+            <h3>
+                <h:link value="Выход" outcome="index" />
+            </h3>
+        </div>
+
+        <div align="center">
+            <h1>Добро пожаловать в личный кабинет</h1>
+            <h2>Вы можете воспользоваться следующими услугами:</h2>
+        </div>
+    <h:form>
+        <table align="center">
+            <tr>
+                <td id="widthTable">
+                    <img src="images/ysl.jpg"/>                    
+                    <h2 align="center">Услуги</h2>
+                </td>
+
+                <td id="widthTable">
+                    <img src="images/hosp.jpg" style="padding-left: 25px"/>                    
+                    <h2 align="center">Моя поликлиника</h2>
+                </td>
+
+                <td id="widthTable">
+                    <img src="images/enp.jpg"/>                    
+                    <h2 align="center">Мой полис</h2>
+                </td>
+            </tr>
+
+            <tr align="center">
+                <td width="285 px">
+                    <p>Здесь Вы можете оформить заявку на прием к врачу, посмотреть перечень и стоимость оказанных медицинских услуг</p>
+                    <p:commandLink action="#{clientText.changeshow()}" update="toUpdate">Подробнее</p:commandLink>
+                </td>
+
+                <td>
+                    <p>Узнайте к какой больнице Вы приклеплены</p>
+                </td>
+
+                <td>
+                    <p>Узнайте в какой СМО Вы обслуживаетесь</p>
+                </td>
+            </tr>
+        </table>
+
+        <p:growl autoUpdate="true"/>
+
+        
+        <p:outputPanel id="toUpdate" >
+            <p:panel rendered="#{clientText.show}">
+                    <h3 style="margin-top:0">Basic</h3>
+                    <p:tabView>
+                        <p:tab title="Godfather Part I">
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <p:graphicImage name="images/ysl.jpg" />
+                                <h:outputText
+                                    value="The story begins as Don Vito Corleone..." />
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="Godfather Part II">
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <p:graphicImage name="images/hosp.jpg" />
+                                <h:outputText value="Francis Ford Coppola's legendary..." />
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="Godfather Part III">
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <p:graphicImage name="images/enp.jpg" />
+                                <h:outputText value="After a break of more than 15 years..." />
+                            </h:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+            </p:panel>
+        </p:outputPanel>
+    </h:form>
+
+        
+        <!--
+        <h:form>
+            <p:growl id="menuForm" showDetail="false"/>
+
+
+            <p:outputPanel id="toUpdate">
+                <p:panel id="myPanel" rendered="#{clientText.show}">
+                </p:panel>
+            </p:outputPanel>
+
+            <p:commandButton action="#{clientText.changeshow()}" update="toUpdate"/>
+        </h:form>
+        -->
     </h:body>
 </html>
 

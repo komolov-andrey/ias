@@ -116,4 +116,9 @@ public class User implements Serializable {
 
         return "";
     }
+    
+    //add finish
+    public String finishSession() {
+        return "index.xhtml";
+    }
 }
