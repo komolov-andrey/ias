@@ -32,7 +32,7 @@
                         <img src="images/cost.jpg"/>                    
                         <h2 align="center">Стоимость услуг</h2>
                     </td>
-                    
+
                     <td id="widthTable">
                         <img src="images/hosp.jpg" style="padding-left: 25px"/>                    
                         <h2 align="center">Моя поликлиника</h2>
@@ -47,10 +47,11 @@
                 <tr align="center">
                     <td>
                         <p>Оформить заявку на прием к врачу</p>
-                        <p:commandLink actionListener="#{clientText.changeshow()}" update="toUpdate">Подробнее</p:commandLink>
+                        <p:commandLink actionListener="#{client.showUsl()}" update="toUpdate,toUpdate1">Подробнее</p:commandLink>
                     </td>
                     <td width="285 px">
                         <p>Посмотреть перечень и стоимость оказанных медицинских услуг</p>
+                        <p:commandLink actionListener="#{client.showCost()}" update="toUpdate,toUpdate1">Подробнее</p:commandLink>
                     </td>
                     <td>
                         <p>Узнайте к какой больнице Вы приклеплены</p>
@@ -65,7 +66,7 @@
             <p:growl autoUpdate="true"/>
 
             <p:outputPanel id="toUpdate" >
-                <p:panel rendered="#{clientText.show}">
+                <p:panel rendered="#{client.showUsl}">
                     <h3 style="margin-top:0">Basic</h3>
                     <p:tabView>
                         <p:tab title="Godfather Part I">
@@ -75,18 +76,23 @@
                                     value="The story begins as Don Vito Corleone..." />
                             </h:panelGrid>
                         </p:tab>
-                        <p:tab title="Godfather Part II">
+
+                    </p:tabView>
+                </p:panel>
+            </p:outputPanel>
+
+            <p:outputPanel id="toUpdate1" >
+                <p:panel rendered="#{client.showCost}">
+                    <h3 style="margin-top:0">Basic2</h3>
+                    <p:tabView>
+                        <p:tab title="Godfather Part 2">
                             <h:panelGrid columns="2" cellpadding="10">
-                                <p:graphicImage name="images/hosp.jpg" />
-                                <h:outputText value="Francis Ford Coppola's legendary..." />
+                                <p:graphicImage name="images/ysl.jpg" />
+                                <h:outputText
+                                    value="The story begins as Don Vito Corleone..." />
                             </h:panelGrid>
                         </p:tab>
-                        <p:tab title="Godfather Part III">
-                            <h:panelGrid columns="2" cellpadding="10">
-                                <p:graphicImage name="images/enp.jpg" />
-                                <h:outputText value="After a break of more than 15 years..." />
-                            </h:panelGrid>
-                        </p:tab>
+
                     </p:tabView>
                 </p:panel>
             </p:outputPanel>
