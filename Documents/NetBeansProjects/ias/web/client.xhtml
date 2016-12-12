@@ -66,18 +66,146 @@
             <p:growl autoUpdate="true"/>
 
             <p:outputPanel id="toUpdate" >
-                <p:panel rendered="#{client.showUsl}">
-                    <h3 style="margin-top:0">Basic</h3>
-                    <p:tabView>
-                        <p:tab title="Godfather Part I">
-                            <h:panelGrid columns="2" cellpadding="10">
-                                <p:graphicImage name="images/ysl.jpg" />
-                                <h:outputText
-                                    value="The story begins as Don Vito Corleone..." />
-                            </h:panelGrid>
+                <p:panel rendered="#{client.showUsl}" style="width: 55%; margin: 0 auto">
+
+                    <p:wizard>
+                        <p:tab title="Район">
+                            <p:panel >
+                                <p:messages />
+                                <h:panelGrid columns="2" columnClasses="label, value">
+                                    <p:selectOneListbox value="#{record.area}" filter="true" required="true" requiredMessage="Выберите район">
+                                        <f:selectItems value="#{record.areas}" />
+                                    </p:selectOneListbox>
+
+                                </h:panelGrid>
+                            </p:panel>
                         </p:tab>
 
-                    </p:tabView>
+                        <p:tab title="Лечебное учреждение">
+                            <p:panel>
+                                <p:messages />
+                                <h:panelGrid columns="2" columnClasses="label, value">
+                                    <p:selectOneListbox value="#{record.hospital}" filter="true" required="true" requiredMessage="Выберите лечебное учреждение">
+                                        <f:selectItems value="#{record.hospitals}" />
+                                    </p:selectOneListbox>
+
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab title="Категория врача">
+                            <p:panel>
+                                <p:messages />
+                                <h:panelGrid columns="2" columnClasses="label, value">
+                                    <p:selectOneListbox value="#{record.cat}" filter="true" required="true" requiredMessage="Выберите категорию врача">
+                                        <f:selectItems value="#{record.cats}" />
+                                    </p:selectOneListbox>
+
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab title="Врачи">
+                            <p:panel>
+                                <p:messages />
+                                <h:panelGrid columns="2" columnClasses="label, value">
+                                    <p:selectOneListbox value="#{record.doctor}" filter="true" required="true" requiredMessage="Выберите врача">
+                                        <f:selectItems value="#{record.doctors}" />
+                                    </p:selectOneListbox>
+
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab title="Время посещения">
+                            <p:panel>
+                                <p:messages />
+
+                                <script type="text/javascript">
+                                    PrimeFaces.locales ['ru'] = {
+                                        closeText: 'Закрыть',
+                                        prevText: 'Назад',
+                                        nextText: 'Вперёд',
+                                        monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                                        monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+                                        dayNames: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Субота'],
+                                        dayNamesShort: ['Воск', 'Пон', 'Вт', 'Ср', 'Четв', 'Пят', 'Суб'],
+                                        dayNamesMin: ['В', 'П', 'Вт', 'С ', 'Ч', 'П ', 'Сб'],
+                                        weekHeader: 'Неделя',
+                                        firstDay: 1,
+                                        isRTL: false,
+                                        showMonthAfterYear: false,
+                                        yearSuffix: '',
+                                        timeOnlyTitle: 'Только время',
+                                        timeText: 'Время',
+                                        hourText: 'Час',
+                                        minuteText: 'Минута',
+                                        secondText: 'Секунда',
+                                        currentText: 'Сегодня',
+                                        ampm: false,
+                                        month: 'Месяц',
+                                        week: 'неделя',
+                                        day: 'День',
+                                        allDayText: 'Весь день'};
+                                </script>
+                                <h:panelGrid columns="4" columnClasses="label, value">
+
+                                    <p:outputLabel for="calendar" value="Выберите дату:" />
+                                    <p:calendar id="calendar" value="#{record.date}" rendered="true" locale="ru" mode="inline" validator="validator.CheckDate" requiredMessage="Выберите дату"/>
+
+                                    <p:outputLabel for="time" value="Время:" />
+                                    <p:calendar id="time" value="#{record.time}" minHour="8" maxHour="16" locale="ru" stepMinute="15" pattern="HH:mm" 
+                                                timeOnly="true" rendered="true" requiredMessage="Выберите время">
+                                    </p:calendar>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab id="confirm" title="Confirmation">
+                            <p:panel header="Confirmation">
+                                <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
+                                    <h:panelGrid columns="2" columnClasses="label, value">
+                                        <h:outputText value="Firstname:#{record.date}" />
+                                        <h:outputText value="" styleClass="outputLabel"/>
+
+                                        <h:outputText value="Lastname: " />
+                                        <h:outputText value="" styleClass="outputLabel"/>
+
+                                        <h:outputText value="Age: " />
+                                        <h:outputText value="" styleClass="outputLabel"/>
+                                    </h:panelGrid>
+
+                                    <h:panelGrid columns="2" columnClasses="label, value">
+                                        <h:outputText value="Street: " />
+                                        <h:outputText value="" styleClass="outputLabel"/>
+
+                                        <h:outputText value="Postal: " />
+                                        <h:outputText value="" styleClass="outputLabel"/>
+
+                                        <h:outputText value="City: " />
+                                        <h:outputText value="" styleClass="outputLabel"/>
+                                    </h:panelGrid>
+
+                                    <h:panelGrid columns="2" columnClasses="label, value">
+                                        <h:outputText value="Email: " />
+                                        <h:outputText value="" styleClass="outputLabel"/>
+
+                                        <h:outputText value="Phone " />
+                                        <h:outputText value="" styleClass="outputLabel"/>
+
+                                        <h:outputText value="Info: " />
+                                        <h:outputText value="" styleClass="outputLabel"/>
+
+                                        <h:outputText />
+                                        <h:outputText />
+                                    </h:panelGrid>
+                                </h:panelGrid>
+
+                                <p:commandButton value="Submit" actionListener="#{userWizard.save}" update="growl" process="@this"/>
+                            </p:panel>
+                        </p:tab>
+
+                    </p:wizard>
                 </p:panel>
             </p:outputPanel>
 

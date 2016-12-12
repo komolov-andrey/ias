@@ -8,7 +8,7 @@ import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "client")
 public class Client implements Serializable {
-    private static boolean showUsl = true;    
+    private static boolean showUsl = false;    
     private static boolean showCost = false;
 
     public static void setShowUsl(boolean show) {
