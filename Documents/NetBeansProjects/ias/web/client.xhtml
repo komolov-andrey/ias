@@ -152,7 +152,8 @@
                                 <h:panelGrid columns="4" columnClasses="label, value">
 
                                     <p:outputLabel for="calendar" value="Выберите дату:" />
-                                    <p:calendar id="calendar" value="#{record.date}" rendered="true" locale="ru" validator="validator.CheckDate" requiredMessage="Выберите дату"/>
+                                    <p:calendar id="calendar" pattern="dd/MM/yyyy" value="#{record.date}" rendered="true" locale="ru" 
+                                                validator="validator.CheckDate" requiredMessage="Выберите дату"/>
 
                                     <p:outputLabel for="time" value="Время:" />
                                     <p:calendar id="time" value="#{record.time}" minHour="8" maxHour="16" locale="ru" stepMinute="15" pattern="HH:mm" 
@@ -166,11 +167,11 @@
                             <p:panel header="Confirmation">
                                 <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
                                     <h:panelGrid columns="2" columnClasses="label, value">
-                                        <h:outputText value="Firstname:#{record.date}" />
+                                        <h:outputText value="Firstname:#{record.dateString}" />
                                         <h:outputText value="" styleClass="outputLabel"/>
 
                                         <h:outputText value="Lastname: " />
-                                        <h:outputText value="" styleClass="outputLabel"/>
+                                        <h:outputText value="#{record.timeString}" styleClass="outputLabel"/>
 
                                         <h:outputText value="Age: " />
                                         <h:outputText value="" styleClass="outputLabel"/>
