@@ -69,12 +69,12 @@
                 <p:panel rendered="#{client.showUsl}" style="width: 55%; margin: 0 auto">
 
                     <p:wizard>
-                        <p:tab title="Район">
+                        <p:tab title="Город">
                             <p:panel >
                                 <p:messages />
                                 <h:panelGrid columns="2" columnClasses="label, value">
-                                    <p:selectOneListbox value="#{record.area}" filter="true" required="true" requiredMessage="Выберите район">
-                                        <f:selectItems value="#{record.areas}" />
+                                    <p:selectOneListbox value="#{record.city}" filter="true" required="true" requiredMessage="Выберите город" style="width: 120%">
+                                        <f:selectItems value="#{record.citys}" />
                                     </p:selectOneListbox>
 
                                 </h:panelGrid>
@@ -85,7 +85,7 @@
                             <p:panel>
                                 <p:messages />
                                 <h:panelGrid columns="2" columnClasses="label, value">
-                                    <p:selectOneListbox value="#{record.hospital}" filter="true" required="true" requiredMessage="Выберите лечебное учреждение">
+                                    <p:selectOneListbox value="#{record.hospital}" filter="true" required="true" requiredMessage="Выберите лечебное учреждение" style="width: 120%">
                                         <f:selectItems value="#{record.hospitals}" />
                                     </p:selectOneListbox>
 
@@ -97,7 +97,7 @@
                             <p:panel>
                                 <p:messages />
                                 <h:panelGrid columns="2" columnClasses="label, value">
-                                    <p:selectOneListbox value="#{record.cat}" filter="true" required="true" requiredMessage="Выберите категорию врача">
+                                    <p:selectOneListbox value="#{record.cat}" filter="true" required="true" requiredMessage="Выберите категорию врача" style="width: 120%">
                                         <f:selectItems value="#{record.cats}" />
                                     </p:selectOneListbox>
 
@@ -109,7 +109,7 @@
                             <p:panel>
                                 <p:messages />
                                 <h:panelGrid columns="2" columnClasses="label, value">
-                                    <p:selectOneListbox value="#{record.doctor}" filter="true" required="true" requiredMessage="Выберите врача">
+                                    <p:selectOneListbox value="#{record.doctor}" filter="true" required="true" requiredMessage="Выберите врача" style="width: 120%">
                                         <f:selectItems value="#{record.doctors}" />
                                     </p:selectOneListbox>
 
@@ -119,8 +119,7 @@
 
                         <p:tab title="Время посещения">
                             <p:panel>
-                                <p:messages />
-
+                                
                                 <script type="text/javascript">
                                     PrimeFaces.locales ['ru'] = {
                                         closeText: 'Закрыть',
@@ -148,10 +147,12 @@
                                         day: 'День',
                                         allDayText: 'Весь день'};
                                 </script>
+                                <p:messages />
+
                                 <h:panelGrid columns="4" columnClasses="label, value">
 
                                     <p:outputLabel for="calendar" value="Выберите дату:" />
-                                    <p:calendar id="calendar" value="#{record.date}" rendered="true" locale="ru" mode="inline" validator="validator.CheckDate" requiredMessage="Выберите дату"/>
+                                    <p:calendar id="calendar" value="#{record.date}" rendered="true" locale="ru" validator="validator.CheckDate" requiredMessage="Выберите дату"/>
 
                                     <p:outputLabel for="time" value="Время:" />
                                     <p:calendar id="time" value="#{record.time}" minHour="8" maxHour="16" locale="ru" stepMinute="15" pattern="HH:mm" 
@@ -201,7 +202,7 @@
                                     </h:panelGrid>
                                 </h:panelGrid>
 
-                                <p:commandButton value="Submit" actionListener="#{userWizard.save}" update="growl" process="@this"/>
+                              <!--  <p:commandButton value="Submit" actionListener="#{userWizard.save}" update="growl" process="@this"/>-->
                             </p:panel>
                         </p:tab>
 

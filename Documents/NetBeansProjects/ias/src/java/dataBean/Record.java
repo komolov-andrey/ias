@@ -8,8 +8,10 @@ package dataBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.event.FlowEvent;
 
 /**
@@ -20,8 +22,8 @@ import org.primefaces.event.FlowEvent;
 @SessionScoped
 public class Record implements Serializable {
     
-    private ArrayList<String> areas;
-    private String area;    
+    private ArrayList<String> citys;
+    private String city;
     private ArrayList<String> hospitals;
     private String hospital;
     private ArrayList<String> cats;
@@ -72,27 +74,33 @@ public class Record implements Serializable {
         this.hospital = hospital;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setCity(String city ) {
+        this.city = city;
     }
 
-    public String getArea() {
-        return area;
+    public String getCity() {
+        return city;
     }
 
-    public ArrayList<String> getAreas() {
+    public ArrayList<String> getCitys() {
         
-        areas = new ArrayList<String>();
-        areas.add("ramenskoe");
-        areas.add("bronnitsy");
-        return areas;
+        citys = new ArrayList<String>();
+        
+        db.DataConn db = new db.DataConn();
+        db.qeuryRequest("select city from hospitals;");
+        citys = db.queryField("city");
+        db.closeConn();
+        
+        return citys;
     }
     
     public ArrayList<String> getHospitals() {
         
-        hospitals = new ArrayList<String>();
-        hospitals.add("ram");
-        hospitals.add("bronn");
+        db.DataConn db = new db.DataConn();
+        db.qeuryRequest("select name from hospitals where city = '" + city + "';");
+        hospitals = db.queryField("name");
+        db.closeConn();
+        
         return hospitals;
     }
     
