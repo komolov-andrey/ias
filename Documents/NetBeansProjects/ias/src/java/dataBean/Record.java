@@ -14,6 +14,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import org.primefaces.event.FlowEvent;
 
 /**
@@ -25,7 +26,7 @@ import org.primefaces.event.FlowEvent;
 public class Record implements Serializable {
 
     private ArrayList<String> citys;
-    private String city;
+    public static String city;
     private ArrayList<String> hospitals;
     private String hospital;
     private ArrayList<String> cats;
@@ -63,7 +64,7 @@ public class Record implements Serializable {
     }
 
     public void setTime(Date time) {
-        this.time = time;        
+        this.time = time;
         setTimeString(time.toString());
     }
 
@@ -133,6 +134,7 @@ public class Record implements Serializable {
     public ArrayList<String> getCats() {
 
         cats = new ArrayList<String>();
+        
         cats.add("imynolog");
         cats.add("dantist");
         return cats;

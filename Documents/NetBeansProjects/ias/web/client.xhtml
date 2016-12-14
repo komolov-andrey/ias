@@ -10,9 +10,9 @@
     </h:head>
     <h:body>
         <div align="right">
-            <h2>Здравствуйте #{user.id_regs}</h2>
+            <h2>Здравствуйте #{client.fio}</h2>
             <h3>
-                <h:link value="Выход" outcome="index" />
+                <h:link value="Выход" outcome="#{user.finishSession()}" />
             </h3>
         </div>
 
@@ -73,8 +73,9 @@
                             <p:panel >
                                 <p:messages />
                                 <h:panelGrid columns="2" columnClasses="label, value">
-                                    <p:selectOneListbox value="#{record.city}" filter="true" required="true" requiredMessage="Выберите город" style="width: 120%">
+                                    <p:selectOneListbox value="#{record.city}" filter="true" requiredMessage="Выберите город" style="width: 120%">
                                         <f:selectItems value="#{record.citys}" />
+                                        <f:validator validatorId="validator.CheckFill"/>
                                     </p:selectOneListbox>
 
                                 </h:panelGrid>
@@ -85,8 +86,9 @@
                             <p:panel>
                                 <p:messages />
                                 <h:panelGrid columns="2" columnClasses="label, value">
-                                    <p:selectOneListbox value="#{record.hospital}" filter="true" required="true" requiredMessage="Выберите лечебное учреждение" style="width: 120%">
+                                    <p:selectOneListbox value="#{record.hospital}" filter="true" requiredMessage="Выберите лечебное учреждение" style="width: 120%">
                                         <f:selectItems value="#{record.hospitals}" />
+                                        <f:validator validatorId="validator.CheckFill"/>
                                     </p:selectOneListbox>
 
                                 </h:panelGrid>

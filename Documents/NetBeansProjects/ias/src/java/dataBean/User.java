@@ -10,6 +10,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+import javax.servlet.http.HttpServletRequest;
 
 @ManagedBean(name = "user")
 @SessionScoped
@@ -17,18 +18,18 @@ public class User implements Serializable {
 
     private String username;
     private String password;
-    
-    private String id_regs;
+
+    private static String id_regs;
     private String id_doctor;
     private String id_hosp;
     private String id_cmo;
 
-    public String getId_regs() {
+    public static String getId_regs() {
         return id_regs;
     }
 
     public void setId_regs(String id_regs) {
-        this.id_regs = id_regs;
+            this.id_regs = id_regs;
     }
 
     public String getId_doctor() {
@@ -93,7 +94,9 @@ public class User implements Serializable {
                     return "cmo?faces-redirect=true";
                 }
                 if (user.get(0) != null) {
-                    setId_regs(user.get(0).toString());
+                    //удалить []
+                    String str = user.get(0).toString();
+                    setId_regs(str.substring(1, str.length() - 1));
                     return "client?faces-redirect=true";
                 }
                 if (doctor.get(0) != null) {
@@ -116,9 +119,19 @@ public class User implements Serializable {
 
         return "";
     }
-    
-    //add finish
+
     public String finishSession() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+
+        try {
+            request.logout();
+        } catch (Exception e) {
+
+        }
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+
         return "index.xhtml";
     }
 }

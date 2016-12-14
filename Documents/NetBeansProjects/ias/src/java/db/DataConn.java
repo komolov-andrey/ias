@@ -13,6 +13,7 @@ public class DataConn {
 
     ODatabaseDocumentTx db;
     List<ODocument> result;
+    
 
     public DataConn() {
         
