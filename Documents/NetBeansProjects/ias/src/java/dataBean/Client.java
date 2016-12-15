@@ -18,6 +18,9 @@ public class Client implements Serializable {
 
     private static boolean showUsl = false;
     private static boolean showCost = false;
+    private static boolean showHospital = false;
+    private static boolean showENP = false;
+
 
     public void setFio() {
         db.DataConn db = new db.DataConn();
@@ -35,43 +38,66 @@ public class Client implements Serializable {
         }
         return fio;
     }
+    
+    public boolean isShowHospital() {
+        return showHospital;
+    }
 
+    public static void setShowHospital(boolean showHospital) {
+        Client.showHospital = showHospital;
+    }
+
+    public boolean isShowENP() {
+        return showENP;
+    }
+
+    public static void setShowENP(boolean showENP) {
+        Client.showENP = showENP;
+    }
+    
+    public boolean isShowUsl() {
+        return showUsl;
+    }    
+    
     public static void setShowUsl(boolean show) {
         Client.showUsl = show;
     }
-//тут дальше перебор что выключать что включать в отображение
-
-    public boolean isShowUsl() {
-        return showUsl;
-    }
-
-    public void showUsl() {
-        setShowUsl(true);
-        setShowCost(false);
-        //FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, isShow() + "", "test");
-        //FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
-    public void showNotUsl() {
-        setShowUsl(false);
+    
+    public boolean isShowCost() {
+        return showCost;
     }
 
     public static void setShowCost(boolean show) {
         Client.showCost = show;
     }
-//тут дальше перебор что выключать что включать в отображение
-
-    public boolean isShowCost() {
-        return showCost;
+    
+    public void showUsl() {
+        setShowUsl(true);
+        setShowCost(false);
+        setShowHospital(false);
+        setShowENP(false);
     }
 
     public void showCost() {
         setShowCost(true);
         setShowUsl(false);
+        setShowHospital(false);
+        setShowENP(false);
+        
     }
 
-    public void showNotCost() {
+    public void showHospital() {
+        setShowCost(false);
         setShowUsl(false);
+        setShowENP(false);
+        setShowHospital(true);
+    }
+    
+    public void showENP() {
+        setShowCost(false);
+        setShowUsl(false);
+        setShowHospital(false);
+        setShowENP(true);
     }
 
 }
