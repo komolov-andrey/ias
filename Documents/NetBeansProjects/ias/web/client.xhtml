@@ -8,7 +8,9 @@
         <title>Личный кабинет клиента</title>
         <link href="css/client.css" rel="stylesheet" type="text/css" />
     </h:head>
+
     <h:body>
+
         <div align="right">
             <h2>Здравствуйте #{client.fio}</h2>
             <h3>
@@ -21,6 +23,7 @@
             <h2>Вы можете воспользоваться следующими услугами:</h2>
         </div>
         <h:form>
+
             <table align="center">
                 <tr>
                     <td id="widthTable">
@@ -229,35 +232,40 @@
                 </p:panel>
             </p:outputPanel>
 
+
             <p:outputPanel id="showHospital" >
-                
-                    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-                    <script type="text/javascript">
-                        ymaps.ready(init);
+
+                <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+                <script type="text/javascript">
+                                    ymaps.ready(init);
                                     var myMap,
                                             myPlacemark;
 
                                     function init() {
                                         myMap = new ymaps.Map("map", {
-                                            center: [55.76, 37.64],
+                                            center: [#{hosp.latitude}, #{hosp.longitude}],
                                             zoom: 15
                                         });
 
-                                        myPlacemark = new ymaps.Placemark(["55.76, 37.64], {
-                                            hintContent: 'Москва!'
-                                        });
-                                        myPlacemark2 = new ymaps.Placemark([55.80, 37.60], {
-                                            hintContent: 'Москва2!'
+                                        myPlacemark = new ymaps.Placemark([#{hosp.latitude}, #{hosp.longitude}], {
+                                            hintContent: '#{hosp.name}'
                                         });
 
                                         myMap.geoObjects.add(myPlacemark);
-                                        myMap.geoObjects.add(myPlacemark2);
                                     }
-                    </script>
+                </script>
                 <p:panel rendered="#{client.showHospital}">
+                    <table align="center">
+                        <tr>
+                            <td id="widthTable">
+                                 <h2>Hello</h2>
+                            </td>
 
-                    <div id="map" style="width: 600px; height: 400px"></div>
-
+                            <td id="widthTable">
+                                <div id="map" style="width: 700px; height: 350px;"/>
+                            </td>
+                        </tr> 
+                    </table>
                 </p:panel>
             </p:outputPanel>
 
