@@ -58,7 +58,7 @@
                     </td>
                     <td>
                         <p>Узнайте к какой больнице Вы приклеплены</p>
-                        <p:commandLink actionListener="#{client.showHospital()}" update="showUsl,showCost,showHospital,showENP">Подробнее</p:commandLink>
+                        <p:commandLink action="#{hosp.setHospitalInfo()}" actionListener="#{client.showHospital()}" update="showUsl,showCost,showHospital,showENP">Подробнее</p:commandLink>
                     </td>
 
                     <td>
@@ -243,11 +243,11 @@
 
                                     function init() {
                                         myMap = new ymaps.Map("map", {
-                                            center: [#{hosp.latitude}, #{hosp.longitude}],
+                                            center: [#{coord.latitude}, #{coord.longitude}],
                                             zoom: 15
                                         });
 
-                                        myPlacemark = new ymaps.Placemark([#{hosp.latitude}, #{hosp.longitude}], {
+                                        myPlacemark = new ymaps.Placemark([#{coord.latitude}, #{coord.longitude}], {
                                             hintContent: '#{hosp.name}'
                                         });
 
@@ -274,7 +274,7 @@
                         </tr> 
                     </table>
                     
-                    <p:accordionPanel activeIndex="" style="width: 70%; margin: 0 auto">
+                    <p:accordionPanel activeIndex="-1" style="width: 70%; margin: 0 auto">
                         <p:tab title="Отобразить список врачей">
                             <h:panelGrid columns="2" cellpadding="10">
                                 <p:graphicImage name="images/cost.jpg" />
@@ -289,17 +289,24 @@
 
             <p:outputPanel id="showENP" >
                 <p:panel rendered="#{client.showENP}">
-                    <h3 style="margin-top:0">Basic4</h3>
-                    <p:tabView>
-                        <p:tab title="Godfather Part 2">
-                            <h:panelGrid columns="2" cellpadding="10">
-                                <p:graphicImage name="images/ysl.jpg" />
-                                <h:outputText
-                                    value="The story begins as Don Vito Corleone..." />
-                            </h:panelGrid>
-                        </p:tab>
+                    <table align="center">
+                        <tr>
+                            <td id="widthTable">
+                                <h3>Вы приклеплены к ...</h3>
+                                <h3>Время работы с 8:00 до 17:00</h3>
+                                <h3>Адрес:  </h3>
+                                <p style="text-indent: 20px;">Область: #{hosp.obl}</p>
+                                <p style="text-indent: 20px;">Район: #{hosp.raion}</p>
+                                <p style="text-indent: 20px;">Город: #{hosp.city}</p>
+                                <p style="text-indent: 20px;">Улица: #{hosp.street}</p>
+                                <p style="text-indent: 20px;">Дом: #{hosp.home}</p>
+                            </td>
 
-                    </p:tabView>
+                            <td id="widthTable">
+                                <div id="map" style="width: 700px; height: 350px;"/>
+                            </td>
+                        </tr> 
+                    </table>
                 </p:panel>
             </p:outputPanel>
         </h:form>

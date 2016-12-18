@@ -15,11 +15,13 @@ import javax.faces.context.FacesContext;
 public class Client implements Serializable {
 
     private static String fio;
+    private static String whatShow="";
 
     private static boolean showUsl = false;
     private static boolean showCost = false;
     private static boolean showHospital = false;
     private static boolean showENP = false;
+    
 
 
     public void setFio() {
@@ -30,6 +32,14 @@ public class Client implements Serializable {
             this.fio = fio.get(1) + " " + fio.get(0);
             
             db.closeConn();
+    }
+
+    public static String getWhatShow() {
+        return whatShow;
+    }
+
+    public static void setWhatShow(String whatShow) {
+        Client.whatShow = whatShow;
     }
 
     public String getFio() {
@@ -91,6 +101,8 @@ public class Client implements Serializable {
         setShowUsl(false);
         setShowENP(false);
         setShowHospital(true);
+        
+        setWhatShow("hosp");
     }
     
     public void showENP() {
@@ -98,6 +110,8 @@ public class Client implements Serializable {
         setShowUsl(false);
         setShowHospital(false);
         setShowENP(true);
+        
+        setWhatShow("enp");
     }
 
 }
