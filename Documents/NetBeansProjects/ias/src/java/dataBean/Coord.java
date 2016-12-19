@@ -16,7 +16,8 @@ public class Coord implements Serializable {
 
     private static String latitude;
     private static String longitude;
-
+    private static String metka;
+    
     ArrayList coord = new ArrayList();
 
     public void setCoord() {
@@ -38,17 +39,21 @@ public class Coord implements Serializable {
             } catch (Exception e) {
                 setLongitude(null);
             }
+            try {
+                setMetka(db.queryField("name").get(0).toString());
+            } catch (Exception e) {
+                setMetka(null);
+            }
 
             db.closeConn();
         }
-        //доделать
+
         if (Client.getWhatShow().equals("enp")) {
             db.DataConn db = new db.DataConn();
-            db.qeuryRequest("select from Hospitals where @rid = '" + HospitalInfo.getId_hospital() + "';");
+            db.qeuryRequest("select from Cmos where @rid = '" + EnpInfo.getId_cmo() + "';");
 
             coord = db.queryField("latitude");
             coord.add(db.queryField("longitude").get(0).toString());
-
 
             try {
                 setLatitude(coord.get(0).toString());
@@ -60,9 +65,22 @@ public class Coord implements Serializable {
             } catch (Exception e) {
                 setLongitude(null);
             }
+            try {
+                setMetka(db.queryField("name").get(0).toString());
+            } catch (Exception e) {
+                setMetka(null);
+            }
 
             db.closeConn();
         }
+    }
+
+    public String getMetka() {
+        return metka;
+    }
+
+    public void setMetka(String metka) {
+        Coord.metka = metka;
     }
 
     public String getLatitude() {

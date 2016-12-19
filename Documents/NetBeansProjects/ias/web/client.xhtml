@@ -63,7 +63,7 @@
 
                     <td>
                         <p>Узнайте в какой СМО Вы обслуживаетесь</p>
-                        <p:commandLink actionListener="#{client.showENP()}" update="showUsl,showCost,showHospital,showENP">Подробнее</p:commandLink>
+                        <p:commandLink action="#{enpInfo.setEnpInfo()}" actionListener="#{client.showENP()}" update="showUsl,showCost,showHospital,showENP">Подробнее</p:commandLink>
                     </td>
                 </tr>
             </table>
@@ -248,7 +248,7 @@
                                         });
 
                                         myPlacemark = new ymaps.Placemark([#{coord.latitude}, #{coord.longitude}], {
-                                            hintContent: '#{hosp.name}'
+                                            hintContent: '#{coord.metka}'
                                         });
 
                                         myMap.geoObjects.add(myPlacemark);
@@ -291,18 +291,15 @@
                 <p:panel rendered="#{client.showENP}">
                     <table align="center">
                         <tr>
-                            <td id="widthTable">
-                                <h3>Вы приклеплены к ...</h3>
-                                <h3>Время работы с 8:00 до 17:00</h3>
-                                <h3>Адрес:  </h3>
-                                <p style="text-indent: 20px;">Область: #{hosp.obl}</p>
-                                <p style="text-indent: 20px;">Район: #{hosp.raion}</p>
-                                <p style="text-indent: 20px;">Город: #{hosp.city}</p>
-                                <p style="text-indent: 20px;">Улица: #{hosp.street}</p>
-                                <p style="text-indent: 20px;">Дом: #{hosp.home}</p>
+                            <td style="background: url(images/polic.jpg)" width="520px" height="730px">
+                                <p style="padding-bottom: 195px; padding-left: 140px; font-size: 11pt">Ваша страховая</p>
                             </td>
 
                             <td id="widthTable">
+                                <h3>Ваша страховая медицинская организация - #{enpInfo.cmo}</h3>
+                                <h3>Телефон для связи: #{enpInfo.phone}</h3>
+                                <h3>Адрес центрального офиса:  #{enpInfo.address}</h3>
+                                
                                 <div id="map" style="width: 700px; height: 350px;"/>
                             </td>
                         </tr> 
