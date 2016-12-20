@@ -291,8 +291,12 @@
                 <p:panel rendered="#{client.showENP}">
                     <table align="center">
                         <tr>
-                            <td style="background: url(images/polic.jpg)" width="520px" height="730px">
-                                <p style="padding-bottom: 195px; padding-left: 140px; font-size: 11pt">Ваша страховая</p>
+                            <td style="background: url(images/polic.jpg); min-width:520px" width="520px" height="730px">
+                                <p style="font-size: 11pt;margin-left: 140px;padding-top: 140px;padding-bottom: 10px;margin-bottom: 5px;margin-top: 1px;">#{client.fam}</p>
+                                <p style="font-size: 11pt;margin-left: 140px;padding-bottom: 40px;margin-top: 1px;margin-bottom: 1px;">#{client.name}</p>
+                                <p style="font-size: 11pt;margin-left: 140px;padding-top: 1px;margin-top: 5px;padding-bottom: 95px;">#{client.dr_Sex}</p>
+                                <p style="font-size: 11pt;margin-left: 140px;padding-top: 80px;padding-left: 35px;padding-bottom: 20px;">#{client.enp}</p>
+                                <p></p>
                             </td>
 
                             <td id="widthTable">
