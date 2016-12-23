@@ -1,16 +1,11 @@
 package dataBean;
 
-import static com.sun.faces.facelets.util.Path.context;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import javax.faces.application.FacesMessage;
-import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "client")
 @SessionScoped

@@ -68,13 +68,13 @@
                 </tr>
             </table>
 
-            <p:growl autoUpdate="true"/>
+            <p:growl id="growl"/>
 
             <p:outputPanel id="showUsl" >
                 <p:panel rendered="#{client.showUsl}" style="width: 55%; margin: 0 auto">
 
-                    <p:wizard>
-                        <p:tab title="Город">
+                    <p:wizard widgetVar="wiz">
+                        <p:tab id="step1" title="Город">
                             <p:panel >
                                 <p:messages />
                                 <h:panelGrid columns="2" columnClasses="label, value">
@@ -157,26 +157,24 @@
                                 <h:panelGrid columns="4" columnClasses="label, value">
 
                                     <p:outputLabel for="calendar" value="Выберите дату:" />
-                                    <p:calendar id="calendar" pattern="dd/MM/yyyy" value="#{record.date}" required="true" locale="ru" 
-                                                validator="validator.CheckDate" requiredMessage="Выберите дату"/>
+                                    <p:calendar id="calendar" pattern="dd/MM/yyyy" value="#{record.date}" locale="ru" validator="validator.CheckDate"/>
 
                                     <p:outputLabel for="time" value="Время:" />
                                     <p:calendar id="time" value="#{record.time}" required="true" minHour="8" maxHour="16" locale="ru" stepMinute="15" pattern="HH:mm" 
-                                                timeOnly="true" rendered="true" requiredMessage="Выберите время">
-                                    </p:calendar>
+                                                timeOnly="true" rendered="true" requiredMessage="Выберите время"/>
                                 </h:panelGrid>
                             </p:panel>
                         </p:tab>
 
-                        <p:tab id="confirm" title="Confirmation">
-                            <p:panel header="Confirmation">
+                        <p:tab id="confirm" title="Подтверждение">
+                            <p:panel>
                                 <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
                                     <h:panelGrid columns="2" columnClasses="label, value">
-                                        <h:outputText value="Firstname:#{record.dateString}" />
+                                        <h:outputText value="Firstname:" />
                                         <h:outputText value="" styleClass="outputLabel"/>
 
                                         <h:outputText value="Lastname: " />
-                                        <h:outputText value="#{record.timeString}" styleClass="outputLabel"/>
+                                        <h:outputText value="" styleClass="outputLabel"/>
 
                                         <h:outputText value="Age: " />
                                         <h:outputText value="" styleClass="outputLabel"/>
@@ -208,7 +206,7 @@
                                     </h:panelGrid>
                                 </h:panelGrid>
 
-                              <!--  <p:commandButton value="Submit" actionListener="#{userWizard.save}" update="growl" process="@this"/>-->
+                                <p:commandButton value="Записаться" update="growl,showUsl" actionListener="#{record.save()}" process="@this"/>
                             </p:panel>
                         </p:tab>
 
@@ -311,20 +309,6 @@
                 </p:panel>
             </p:outputPanel>
         </h:form>
-
-        <!--
-        <h:form>
-            <p:growl id="menuForm" showDetail="false"/>
-
-
-            <p:outputPanel id="toUpdate">
-                <p:panel id="myPanel" rendered="#{clientText.show}">
-                </p:panel>
-            </p:outputPanel>
-
-            <p:commandButton action="#{clientText.changeshow()}" update="toUpdate"/>
-        </h:form>
-        -->
     </h:body>
 </html>
 

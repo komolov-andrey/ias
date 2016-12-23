@@ -22,8 +22,7 @@ public class DataConn {
 
     public void qeuryRequest(String sql) {
 
-        result = db.query(
-                new OSQLSynchQuery<ODocument>(sql));
+        result = db.query(new OSQLSynchQuery<ODocument>(sql));
     }
 
     public ArrayList queryField(String field) {

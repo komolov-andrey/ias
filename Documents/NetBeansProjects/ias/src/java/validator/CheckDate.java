@@ -5,7 +5,9 @@
  */
 package validator;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -20,24 +22,20 @@ public class CheckDate implements Validator {
     public void validate(FacesContext context, UIComponent component, Object value)
             throws ValidatorException {
 
-        //проверка енп с базы данных (надо заполнить)
-        /*
-        if (value.toString().length() == 0) {
-            FacesMessage message = new FacesMessage("Зполните ЕНП");
+        if (value == null) {
+            FacesMessage message = new FacesMessage("Выберите дату");
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(message);
         } else {
-            db.DataConn db = new db.DataConn();
-            db.qeuryRequest("select enp from regs where enp = '" + value.toString().replaceAll(" ","") + "';");
-            ArrayList enp = db.queryField("enp");
-            db.closeConn();
-            if (enp.size() != 1) {
-                FacesMessage message = new FacesMessage("ЕНП не найден");
+            Date date = (Date) value;
+            DateFormat df = new SimpleDateFormat("EEE");
+            String s = df.format(date);
+
+            if (s.equals("Вс") || s.equals("Сб")) {
+                FacesMessage message = new FacesMessage("Выходной день");
                 message.setSeverity(FacesMessage.SEVERITY_ERROR);
                 throw new ValidatorException(message);
             }
         }
-*/
     }
-
 }

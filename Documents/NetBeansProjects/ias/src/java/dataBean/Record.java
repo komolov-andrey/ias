@@ -14,8 +14,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
-import org.primefaces.event.FlowEvent;
 
 /**
  *
@@ -36,28 +34,6 @@ public class Record implements Serializable {
     //подумать
     private Date date;
     private Date time;
-    private String dateString;
-    private String timeString;
-
-    public String getDateString() {
-        return dateString;
-    }
-
-    public void setDateString(String dateString) {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String s = df.format(date);
-        this.dateString = s;
-    }
-
-    public String getTimeString() {
-        return timeString;
-    }
-
-    public void setTimeString(String timeString) {
-        DateFormat df = new SimpleDateFormat("HH:mm");
-        String s = df.format(time);
-        this.timeString = s;
-    }
 
     public Date getTime() {
         return time;
@@ -65,7 +41,6 @@ public class Record implements Serializable {
 
     public void setTime(Date time) {
         this.time = time;
-        setTimeString(time.toString());
     }
 
     public Date getDate() {
@@ -74,7 +49,6 @@ public class Record implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
-        setDateString(date.toString());
     }
 
     public String getDoctor() {
@@ -134,17 +108,95 @@ public class Record implements Serializable {
     public ArrayList<String> getCats() {
 
         cats = new ArrayList<String>();
-        
-        cats.add("imynolog");
-        cats.add("dantist");
+
+        db.DataConn db = new db.DataConn();
+        db.qeuryRequest("select from Hospitals where name = '" + getHospital() + "';");
+        String id_hosp = db.queryField("@rid").get(0).toString();
+        db.qeuryRequest("select id_category from Doctors where id_hosp = " + id_hosp + ";");
+
+        ArrayList id_cats = new ArrayList();
+        id_cats = db.queryField("id_category");
+        ArrayList<String> id_catsString = new ArrayList<String>();
+
+        for (int i = 0; i < id_cats.size(); i++) {
+            String str = id_cats.get(i).toString();
+            id_catsString.add(str.substring(1, str.length() - 1));
+        }
+        db.qeuryRequest("select name from Cat_doc where @rid in (" + id_catsString + ");");
+
+        cats = db.queryField("name");
+        db.closeConn();
+
         return cats;
     }
 
     public ArrayList<String> getDoctors() {
 
         doctors = new ArrayList<String>();
-        doctors.add("ivanov");
-        doctors.add("petrov");
+        db.DataConn db = new db.DataConn();
+
+        db.qeuryRequest("select from Cat_doc where name = '" + getCat() + "';");
+        String id_cat = db.queryField("@rid").get(0).toString();
+        db.qeuryRequest("select from Hospitals where name = '" + getHospital() + "';");
+        String id_hosp = db.queryField("@rid").get(0).toString();
+
+        db.qeuryRequest("select from Doctors where id_category = " + id_cat + " AND id_hosp = " + id_hosp + ";");
+        ArrayList<String> fam = new ArrayList<String>();
+        ArrayList<String> name = new ArrayList<String>();
+
+        fam = db.queryField("fam");
+        name = db.queryField("im");
+
+        for (int i = 0; i < fam.size(); i++) {
+            doctors.add(fam.get(i).toString() + " " + name.get(i).toString());
+        }
+        db.closeConn();
+
         return doctors;
+    }
+
+    public void save() {
+        db.DataConn db = new db.DataConn();
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String d = df.format(date);
+
+            df = new SimpleDateFormat("HH_mm");
+            String t = df.format(time);
+
+            String[] fio = getDoctor().split(" ");
+            String fam = fio[0];
+            String im = fio[1];
+
+            db.qeuryRequest("select from Doctors where fam = '" + fam + "' AND im = '" + im + "';");
+            String id_doc = db.queryField("@rid").get(0).toString();
+
+            db.qeuryRequest("select from Appoinments where date in DATE('" + d + " 00:00:00');");
+            ArrayList appoinmentDate = db.queryField("date");
+
+            if (appoinmentDate.size() == 0) {
+                db.qeuryRun("INSERT INTO Appoinments SET date = DATE('" + d + " 00:00:00'), id_doctor = " + id_doc + ", t" + t + " = true;");
+                FacesMessage msg = new FacesMessage("Заявка принята");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+            } else {
+                db.qeuryRequest("select from Appoinments where date in DATE('" + d + " 00:00:00') AND t" + t + " = true;");
+                ArrayList appoinmentTime = db.queryField("t" + t);
+                if (appoinmentTime.size() == 0) {
+                    db.qeuryRun("INSERT INTO Appoinments SET date = DATE('" + d + " 00:00:00'), id_doctor = " + id_doc + ", t" + t + " = true;");
+                    FacesMessage msg = new FacesMessage("Заявка принята");
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                } else {
+                    FacesMessage msg = new FacesMessage("Время занято");
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                }
+            }
+
+        } catch (Exception e) {
+            FacesMessage msg = new FacesMessage("Ошибка");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } finally {
+            db.closeConn();
+            Client.setShowUsl(false);
+        }
     }
 }
