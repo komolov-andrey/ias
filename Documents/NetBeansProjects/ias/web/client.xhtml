@@ -73,8 +73,8 @@
             <p:outputPanel id="showUsl" >
                 <p:panel rendered="#{client.showUsl}" style="width: 55%; margin: 0 auto">
 
-                    <p:wizard widgetVar="wiz">
-                        <p:tab id="step1" title="Город">
+                    <p:wizard>
+                        <p:tab title="Город">
                             <p:panel >
                                 <p:messages />
                                 <h:panelGrid columns="2" columnClasses="label, value">
@@ -170,39 +170,29 @@
                             <p:panel>
                                 <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
                                     <h:panelGrid columns="2" columnClasses="label, value">
-                                        <h:outputText value="Firstname:" />
-                                        <h:outputText value="" styleClass="outputLabel"/>
+                                        <h:outputText value="Город:" />
+                                        <h:outputText value="#{record.city}" styleClass="outputLabel"/>
 
-                                        <h:outputText value="Lastname: " />
-                                        <h:outputText value="" styleClass="outputLabel"/>
+                                        <h:outputText value="Лечебное учреждение: " />
+                                        <h:outputText value="#{record.hospital}" styleClass="outputLabel"/>
 
-                                        <h:outputText value="Age: " />
-                                        <h:outputText value="" styleClass="outputLabel"/>
                                     </h:panelGrid>
 
                                     <h:panelGrid columns="2" columnClasses="label, value">
-                                        <h:outputText value="Street: " />
-                                        <h:outputText value="" styleClass="outputLabel"/>
+                                        <h:outputText value="Категория врача: " />
+                                        <h:outputText value="#{record.cat}" styleClass="outputLabel"/>
+                                        
+                                        <h:outputText value="Имя врача: " />
+                                        <h:outputText value="#{record.doctor}" styleClass="outputLabel"/>
 
-                                        <h:outputText value="Postal: " />
-                                        <h:outputText value="" styleClass="outputLabel"/>
-
-                                        <h:outputText value="City: " />
-                                        <h:outputText value="" styleClass="outputLabel"/>
                                     </h:panelGrid>
 
                                     <h:panelGrid columns="2" columnClasses="label, value">
-                                        <h:outputText value="Email: " />
-                                        <h:outputText value="" styleClass="outputLabel"/>
+                                        <h:outputText value="Дата посещения: " />
+                                        <h:outputText value="#{record.dateString}" styleClass="outputLabel"/>
 
-                                        <h:outputText value="Phone " />
-                                        <h:outputText value="" styleClass="outputLabel"/>
-
-                                        <h:outputText value="Info: " />
-                                        <h:outputText value="" styleClass="outputLabel"/>
-
-                                        <h:outputText />
-                                        <h:outputText />
+                                        <h:outputText value="Время посещения: " />
+                                        <h:outputText value="#{record.timeString}" styleClass="outputLabel"/>
                                     </h:panelGrid>
                                 </h:panelGrid>
 

@@ -31,15 +31,34 @@ public class Record implements Serializable {
     private String cat;
     private ArrayList<String> doctors;
     private String doctor;
-    //подумать
     private Date date;
     private Date time;
+    private String dateString;
+    private String timeString;
+
+    public String getDateString() {
+        return dateString;
+    }
+
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+
+    public String getTimeString() {
+        return timeString;
+    }
+
+    public void setTimeString(String timeString) {
+        this.timeString = timeString;
+    }
 
     public Date getTime() {
         return time;
     }
 
     public void setTime(Date time) {
+        DateFormat df = new SimpleDateFormat("HH:mm");
+        setTimeString(df.format(time));
         this.time = time;
     }
 
@@ -48,6 +67,8 @@ public class Record implements Serializable {
     }
 
     public void setDate(Date date) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        setDateString(df.format(date));
         this.date = date;
     }
 
