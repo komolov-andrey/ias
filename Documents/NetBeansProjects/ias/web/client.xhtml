@@ -181,7 +181,7 @@
                                     <h:panelGrid columns="2" columnClasses="label, value">
                                         <h:outputText value="Категория врача: " />
                                         <h:outputText value="#{record.cat}" styleClass="outputLabel"/>
-                                        
+
                                         <h:outputText value="Имя врача: " />
                                         <h:outputText value="#{record.doctor}" styleClass="outputLabel"/>
 
@@ -210,7 +210,7 @@
                     <p:tabView>
                         <p:tab title="Godfather Part 2">
                             <h:panelGrid columns="2" cellpadding="10">
-                                <p:graphicImage name="images/ysl.jpg" />
+                                <p:graphicImage name="/images/ysl.jpg" />
                                 <h:outputText
                                     value="The story begins as Don Vito Corleone..." />
                             </h:panelGrid>
@@ -261,17 +261,45 @@
                             </td>
                         </tr> 
                     </table>
-                    
+
                     <p:accordionPanel activeIndex="-1" style="width: 70%; margin: 0 auto">
                         <p:tab title="Отобразить список врачей">
-                            <h:panelGrid columns="2" cellpadding="10">
-                                <p:graphicImage name="images/cost.jpg" />
-                                <h:outputText
-                                    value="The story begins as Don Vito Corleone..." />
-                            </h:panelGrid>
+                            <p:dataTable var="doc" value="#{doctorList.doctors}">
+                                <p:column headerText="Категория">
+                                    <h:outputText value="#{doc.cat}" />
+                                </p:column>
+
+                                <p:column headerText="Фамилия">
+                                    <h:outputText value="#{doc.fam}" />
+                                </p:column>
+
+                                <p:column headerText="Имя">
+                                    <h:outputText value="#{doc.im}" />
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                <p:outputPanel id="carDetail" style="text-align:center;">
+                                    <p:panelGrid  columns="2" columnClasses="label,value">
+
+                                        <h:outputText value="Id:" />
+                                        <h:outputText value="" />
+
+                                        <h:outputText value="Year" />
+                                        <h:outputText value="" />
+
+                                        <h:outputText value="Brand" />
+                                        <h:outputText value="" />
+
+                                        <h:outputText value="Color:" />
+                                        <h:outputText value="" />
+                                    </p:panelGrid>
+                                </p:outputPanel>
+                            </p:dialog>
                         </p:tab>
                     </p:accordionPanel>
-                    
+
                 </p:panel>
             </p:outputPanel>
 
@@ -291,7 +319,7 @@
                                 <h3>Ваша страховая медицинская организация - #{enpInfo.cmo}</h3>
                                 <h3>Телефон для связи: #{enpInfo.phone}</h3>
                                 <h3>Адрес центрального офиса:  #{enpInfo.address}</h3>
-                                
+
                                 <div id="map" style="width: 700px; height: 350px;"/>
                             </td>
                         </tr> 
