@@ -264,39 +264,19 @@
 
                     <p:accordionPanel activeIndex="-1" style="width: 70%; margin: 0 auto">
                         <p:tab title="Отобразить список врачей">
-                            <p:dataTable var="doc" value="#{doctorList.doctors}">
-                                <p:column headerText="Категория">
+                            <p:dataTable var="doc" value="#{filterViewDoctors.doctors}" filteredValue="#{filterViewDoctors.filteredDoctors}" widgetVar="docTable">
+
+                                <p:column headerText="Категория" filterMatchMode="contains" filterBy="#{doc.cat}" sortBy="#{doc.cat}">
                                     <h:outputText value="#{doc.cat}" />
                                 </p:column>
-
-                                <p:column headerText="Фамилия">
+                                <p:column headerText="Фамилия" filterBy="#{doc.fam}" sortBy="#{doc.fam}" filterMatchMode="contains">
                                     <h:outputText value="#{doc.fam}" />
                                 </p:column>
 
-                                <p:column headerText="Имя">
+                                <p:column filterBy="#{doc.im}" sortBy="#{doc.im}" headerText="Имя" filterMatchMode="contains">
                                     <h:outputText value="#{doc.im}" />
                                 </p:column>
-
                             </p:dataTable>
-
-                            <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                <p:outputPanel id="carDetail" style="text-align:center;">
-                                    <p:panelGrid  columns="2" columnClasses="label,value">
-
-                                        <h:outputText value="Id:" />
-                                        <h:outputText value="" />
-
-                                        <h:outputText value="Year" />
-                                        <h:outputText value="" />
-
-                                        <h:outputText value="Brand" />
-                                        <h:outputText value="" />
-
-                                        <h:outputText value="Color:" />
-                                        <h:outputText value="" />
-                                    </p:panelGrid>
-                                </p:outputPanel>
-                            </p:dialog>
                         </p:tab>
                     </p:accordionPanel>
 

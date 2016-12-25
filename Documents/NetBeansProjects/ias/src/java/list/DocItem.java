@@ -5,13 +5,13 @@
  */
 package list;
 
-public class ListItem {
+public class DocItem {
 
     private String cat;
     private String fam;
     private String im;
 
-    public ListItem(String cat, String fam, String im) {
+    public DocItem(String cat, String fam, String im) {
         this.cat = cat;
         this.fam = fam;
         this.im = im;
