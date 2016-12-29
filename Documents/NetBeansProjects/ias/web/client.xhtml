@@ -14,7 +14,8 @@
         <div align="right">
             <h2>Здравствуйте #{client.fio}</h2>
             <h3>
-                <h:link value="Выход" outcome="#{user.finishSession()}" />
+                <!--не работает выход из сессии-->
+                <p:commandLink action="#{user.finishSession()}" value="Выход"/>
             </h3>
         </div>
 
@@ -206,17 +207,36 @@
 
             <p:outputPanel id="showCost" >
                 <p:panel rendered="#{client.showCost}">
-                    <h3 style="margin-top:0">Basic2</h3>
-                    <p:tabView>
-                        <p:tab title="Godfather Part 2">
-                            <h:panelGrid columns="2" cellpadding="10">
-                                <p:graphicImage name="/images/ysl.jpg" />
-                                <h:outputText
-                                    value="The story begins as Don Vito Corleone..." />
-                            </h:panelGrid>
-                        </p:tab>
+                    <h:panelGrid columns="2">
+                        <p:dataTable scrollable="true" scrollHeight="700" style="width: 50%" var="visit" value="#{filterViewVisits.visits}"
+                                     filteredValue="#{filterViewVisits.filteredVisits}" widgetVar="VisitTable">
+                            <p:ajax event="filter" update=":#{p:component('total')}"/>
 
-                    </p:tabView>
+                            <p:column headerText="Дата" filterMatchMode="contains" filterBy="#{visit.year}" sortBy="#{visit.year}">
+                                <h:outputText value="#{visit.year}" />
+                            </p:column>
+                            <p:column headerText="Лечебное учреждение" filterBy="#{visit.hosp}" sortBy="#{visit.hosp}" filterMatchMode="contains">
+                                <h:outputText value="#{visit.hosp}" />
+                            </p:column>
+
+                            <p:column headerText="Врач" filterBy="#{visit.doc}" sortBy="#{visit.doc}" filterMatchMode="contains">
+                                <h:outputText value="#{visit.doc}" />
+                            </p:column>
+
+                            <p:column headerText="Категория" filterBy="#{visit.cat}" sortBy="#{visit.cat}" filterMatchMode="contains">
+                                <h:outputText value="#{visit.cat}" />
+                            </p:column>
+
+                            <p:column headerText="Стоимость" filterBy="#{visit.cost}" sortBy="#{visit.cost}" filterMatchMode="contains">
+                                <h:outputText value="#{visit.cost}" />
+                            </p:column>
+                        </p:dataTable>
+                        
+                            <p:outputLabel value="Итого #{filterViewVisits.total}"/>
+                            <p:outputLabel id="total" style="margin-left: 700px; font-size: 20px; color: red; font-weight: bold"
+                                           value="Итого #{filterViewVisits.total} руб."/>
+
+                    </h:panelGrid>
                 </p:panel>
             </p:outputPanel>
 

@@ -93,9 +93,7 @@ public class Client implements Serializable {
     }
 
     public String getFio() {
-        if (fio == null) {
             setFio();
-        }
         return fio;
     }
 

@@ -43,4 +43,9 @@ public class DataConn {
 
         db.command(new OCommandSQL(sql)).execute();
     }
+
+    public List<ODocument> getResult() {
+        return result;
+    }
+    
 }
