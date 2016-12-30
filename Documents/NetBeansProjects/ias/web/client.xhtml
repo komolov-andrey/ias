@@ -208,9 +208,9 @@
             <p:outputPanel id="showCost" >
                 <p:panel rendered="#{client.showCost}">
                     <h:panelGrid columns="2">
-                        <p:dataTable scrollable="true" scrollHeight="700" style="width: 50%" var="visit" value="#{filterViewVisits.visits}"
+                        <p:dataTable scrollable="true" scrollHeight="700" style="width: 950px" var="visit" value="#{filterViewVisits.visits}"
                                      filteredValue="#{filterViewVisits.filteredVisits}" widgetVar="VisitTable">
-                            <p:ajax event="filter" update=":#{p:component('total')}"/>
+                            <p:ajax event="filter" update=":#{p:component('total')}, :#{p:component('graph')}"/>
 
                             <p:column headerText="Дата" sortBy="#{visit.year}" filterBy="#{visit.year}" filterFunction="#{controller.filterByDate}">
                                 <f:facet name="filter">
@@ -249,7 +249,8 @@
                             </p:column>
                         </p:dataTable>
 
-                        <p:outputLabel value="Итого #{filterViewVisits.total}"/>
+                        <p:chart id="graph" type="line" model="#{chartView.dateModel}" style="height:500px; width: 800px"/>
+                        
                         <p:outputLabel id="total" style="margin-left: 700px; font-size: 20px; color: red; font-weight: bold"
                                        value="Итого #{filterViewVisits.total} руб."/>
 

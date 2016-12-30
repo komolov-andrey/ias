@@ -32,7 +32,7 @@ import list.VisitItem;
 public class FilterVisits implements Serializable {
 
     private List<VisitItem> visits;
-    private List<VisitItem> filteredVisits;
+    private static List<VisitItem> filteredVisits;
     private int total;
 
     @PostConstruct
@@ -200,6 +200,9 @@ public class FilterVisits implements Serializable {
     }
 
     public List<VisitItem> getFilteredVisits() {
+        return filteredVisits;
+    }
+    public static List<VisitItem> getFilteredVisitsForGraph() {
         return filteredVisits;
     }
 
