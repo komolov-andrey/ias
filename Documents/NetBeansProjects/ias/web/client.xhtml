@@ -212,9 +212,26 @@
                                      filteredValue="#{filterViewVisits.filteredVisits}" widgetVar="VisitTable">
                             <p:ajax event="filter" update=":#{p:component('total')}"/>
 
-                            <p:column headerText="Дата" filterMatchMode="contains" filterBy="#{visit.year}" sortBy="#{visit.year}">
-                                <h:outputText value="#{visit.year}" />
+                            <p:column headerText="Дата" sortBy="#{visit.year}" filterBy="#{visit.year}" filterFunction="#{controller.filterByDate}">
+                                <f:facet name="filter">
+                                    <h:inputHidden id="filter" />
+                                </f:facet>
+                                <f:facet name="header">
+                                    <h:outputText value="Дата" />
+                                    <br />
+                                    <p:outputLabel value="с "/>
+                                    <p:calendar size="6" id="from" pattern="dd.MM.yyyy" mask="true">
+                                        <p:ajax event="dateSelect" onstart="$(PrimeFaces.escapeClientId('#{p:component('filter')}'))[0].value = $(PrimeFaces.escapeClientId('#{p:component('from')}_input'))[0].value + '-' + $(PrimeFaces.escapeClientId('#{p:component('to')}_input'))[0].value" oncomplete="PF('VisitTable').filter()" />
+                                    </p:calendar>
+                                    <br />
+                                    <p:outputLabel value="по "/>
+                                    <p:calendar size="6" id="to" pattern="dd.MM.yyyy" mask="true">
+                                        <p:ajax event="dateSelect" onstart="$(PrimeFaces.escapeClientId('#{p:component('filter')}'))[0].value = $(PrimeFaces.escapeClientId('#{p:component('from')}_input'))[0].value + '-' + $(PrimeFaces.escapeClientId('#{p:component('to')}_input'))[0].value" oncomplete="PF('VisitTable').filter()" />
+                                    </p:calendar>
+                                </f:facet>
+                                <h:outputText value="#{visit.year}"/>
                             </p:column>
+
                             <p:column headerText="Лечебное учреждение" filterBy="#{visit.hosp}" sortBy="#{visit.hosp}" filterMatchMode="contains">
                                 <h:outputText value="#{visit.hosp}" />
                             </p:column>
@@ -227,14 +244,14 @@
                                 <h:outputText value="#{visit.cat}" />
                             </p:column>
 
-                            <p:column headerText="Стоимость" filterBy="#{visit.cost}" sortBy="#{visit.cost}" filterMatchMode="contains">
+                            <p:column headerText="Стоимость" sortBy="#{visit.cost}">
                                 <h:outputText value="#{visit.cost}" />
                             </p:column>
                         </p:dataTable>
-                        
-                            <p:outputLabel value="Итого #{filterViewVisits.total}"/>
-                            <p:outputLabel id="total" style="margin-left: 700px; font-size: 20px; color: red; font-weight: bold"
-                                           value="Итого #{filterViewVisits.total} руб."/>
+
+                        <p:outputLabel value="Итого #{filterViewVisits.total}"/>
+                        <p:outputLabel id="total" style="margin-left: 700px; font-size: 20px; color: red; font-weight: bold"
+                                       value="Итого #{filterViewVisits.total} руб."/>
 
                     </h:panelGrid>
                 </p:panel>

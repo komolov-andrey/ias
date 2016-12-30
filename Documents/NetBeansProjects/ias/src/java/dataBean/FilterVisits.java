@@ -153,7 +153,7 @@ public class FilterVisits implements Serializable {
         String nameDoc;
         String nameCat;
         for (int i = 0; i < ish_dataVisit.size(); i++) {
-            //через listItem
+            
             String dateVisit = df.format(ish_dataVisit.get(i));
             nameHosp = ish_hospVisit.get(i).toString();
             nameHosp = nameHosp.substring(1, nameHosp.length() - 1);
