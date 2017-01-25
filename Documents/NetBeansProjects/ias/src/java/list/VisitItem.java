@@ -23,8 +23,6 @@ public class VisitItem {
     private String doc;
     private String cat;
     private int cost;
-    private String year2;
-    private String year3;
 
     public VisitItem(String year, String hosp, String doc, String cat, String cost) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -34,22 +32,6 @@ public class VisitItem {
         this.doc = doc;
         this.cat = cat;
         this.cost = Integer.parseInt(cost);
-    }
-
-    public String getYear3() {
-        return year3;
-    }
-
-    public void setYear3(String year3) {
-        this.year3 = year3;
-    }
-
-    public String getYear2() {
-        return year2;
-    }
-
-    public void setYear2(String year2) {
-        this.year2 = year2;
     }
 
     public LocalDate getYear() {

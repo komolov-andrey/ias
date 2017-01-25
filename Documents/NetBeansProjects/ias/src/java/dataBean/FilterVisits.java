@@ -218,7 +218,7 @@ public class FilterVisits implements Serializable {
     public void setTotal() {
         int sum = 0;
         for (int i = 0; i < getFilteredVisits().size(); i++) {
-           sum +=  getFilteredVisits().get(i).getCost();
+           sum +=  getFilteredVisits().get(i).getCost();           
         }
         this.total = sum;
     }

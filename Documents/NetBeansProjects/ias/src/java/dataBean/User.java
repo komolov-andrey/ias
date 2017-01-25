@@ -22,7 +22,7 @@ public class User implements Serializable {
     private static String id_regs;
     private String id_doctor;
     private String id_hosp;
-    private String id_cmo;
+    private static String id_cmo;
 
     public static String getId_regs() {
         return id_regs;
@@ -48,7 +48,7 @@ public class User implements Serializable {
         this.id_hosp = id_hosp;
     }
 
-    public String getId_cmo() {
+    public static String getId_cmo() {
         return id_cmo;
     }
 
@@ -90,7 +90,9 @@ public class User implements Serializable {
         if (login.size() == 1) {
             if ((login.get(0).equals(getUsername())) && (pwd.get(0).equals(getPassword()))) {
                 if (cmos.get(0) != null) {
-                    setId_cmo(cmos.get(0).toString());
+                    //удалить []
+                    String str = cmos.get(0).toString();
+                    setId_cmo(str.substring(1, str.length() - 1));
                     return "cmo?faces-redirect=true";
                 }
                 if (user.get(0) != null) {

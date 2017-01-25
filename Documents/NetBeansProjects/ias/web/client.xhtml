@@ -11,19 +11,19 @@
 
     <h:body>
 
-        <div align="right">
-            <h2>Здравствуйте #{client.fio}</h2>
-            <h3>
-                <!--не работает выход из сессии-->
-                <p:commandLink action="#{user.finishSession()}" value="Выход"/>
-            </h3>
-        </div>
-
-        <div align="center">
-            <h1>Добро пожаловать в личный кабинет</h1>
-            <h2>Вы можете воспользоваться следующими услугами:</h2>
-        </div>
         <h:form>
+            <div align="right">
+                <h2>Здравствуйте #{client.fio}</h2>
+                <h3>
+                    <!--не работает выход из сессии-->
+                    <p:commandLink action="#{user.finishSession()}" value="Выход"/>
+                </h3>
+            </div>
+
+            <div align="center">
+                <h1>Добро пожаловать в личный кабинет</h1>
+                <h2>Вы можете воспользоваться следующими услугами:</h2>
+            </div>
 
             <table align="center">
                 <tr>
@@ -250,7 +250,7 @@
                         </p:dataTable>
 
                         <p:chart id="graph" type="line" model="#{chartView.dateModel}" style="height:500px; width: 800px"/>
-                        
+
                         <p:outputLabel id="total" style="margin-left: 700px; font-size: 20px; color: red; font-weight: bold"
                                        value="Итого #{filterViewVisits.total} руб."/>
 

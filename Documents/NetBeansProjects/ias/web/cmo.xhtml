@@ -5,10 +5,57 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Личный кабинет клиента</title>
+        <link href="css/client.css" rel="stylesheet" type="text/css" />
     </h:head>
+
     <h:body>
-        Hello from #{user.id_cmo}
+        <h:form>
+            <div align="right">
+                <h2>Здравствуйте СК #{cmo.name}</h2>
+                <h3>
+                    <!--не работает выход из сессии-->
+                    <p:commandLink action="#{user.finishSession()}" value="Выход"/>
+                </h3>
+            </div>
+
+            <div align="center">
+                <h1>Добро пожаловать в личный кабинет</h1>
+            </div>
+
+            <table border="2" width="90%">
+                <tr>
+                    <td>
+                        <h3>Число застрахованных #{cmo.countClients}</h3>
+                    </td>
+                    <td>
+                        <div>
+                            <p:commandButton value="Сформировать счет" action="#{cmo.createVisits()}" update=":#{p:component('sum')}" style="display: inline" />
+                            <p:outputLabel id="sum" style="display: inline">Итого #{cmo.total}</p:outputLabel>
+                            <p:button value="Сохранить" style="display: inline" />
+                        </div>
+                        <table width="40%">
+                            <tr>
+                                <td>
+                                    <p>Выберите год/месяц</p>
+                                </td>
+                                <td>
+                                    <p:selectOneMenu value="#{cmo.year}" filter="true">
+                                        <f:selectItems value="#{cmo.years}" />
+                                    </p:selectOneMenu>
+                                </td>
+                                <td>
+                                    <p:selectOneMenu value="#{cmo.month}" filter="true">
+                                        <f:selectItems value="#{cmo.months}" />
+                                    </p:selectOneMenu>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
     </h:body>
+
 </html>
 
