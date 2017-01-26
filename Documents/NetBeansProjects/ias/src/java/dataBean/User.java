@@ -134,6 +134,6 @@ public class User implements Serializable {
         }
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
-        return "index.xhtml";
+        return "index.xhtml?faces-redirect=true";
     }
 }

@@ -23,7 +23,7 @@
                 <h1>Добро пожаловать в личный кабинет</h1>
             </div>
 
-            <table border="2" width="90%">
+            <table width="90%">
                 <tr>
                     <td>
                         <h3>Число застрахованных #{cmo.countClients}</h3>
@@ -31,13 +31,14 @@
                     <td>
                         <div>
                             <p:commandButton value="Сформировать счет" action="#{cmo.createVisits()}" update=":#{p:component('sum')}" style="display: inline" />
-                            <p:outputLabel id="sum" style="display: inline">Итого #{cmo.total}</p:outputLabel>
-                            <p:button value="Сохранить" style="display: inline" />
+                            <p:outputLabel id="sum" style="display: inline">Итого #{cmo.total} &nbsp;&nbsp;</p:outputLabel>
+                            <!-- не работает update даже при перезагрузке страницы на table -->
+                            <p:commandButton value="Сохранить" action="#{cmo.savePayment()}" update=":#{p:component('table')}, :#{p:component('graph')}" style="display: inline" />
                         </div>
                         <table width="40%">
                             <tr>
                                 <td>
-                                    <p>Выберите год/месяц</p>
+                                    <p>Выберите год/месяц, лечебное учреждение</p>
                                 </td>
                                 <td>
                                     <p:selectOneMenu value="#{cmo.year}" filter="true">
@@ -49,11 +50,44 @@
                                         <f:selectItems value="#{cmo.months}" />
                                     </p:selectOneMenu>
                                 </td>
+                                <td>
+                                    <p:selectOneMenu value="#{cmo.ly}" filter="true">
+                                        <f:selectItems value="#{cmo.dictHosp.values()}" />
+                                    </p:selectOneMenu>
+                                </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
             </table>
+
+            <h:panelGrid columns="2">
+                <p:dataTable id="table" scrollable="true" scrollHeight="700" style="width: 950px" var="payment" value="#{cmo.payment}"
+                             filteredValue="#{cmo.filteredPayment}" widgetVar="VisitTable">
+                    <p:ajax event="filter" update=":#{p:component('graph')}"/>
+
+                    <p:column headerText="Дата" sortBy="#{payment.year}">
+                        <h:outputText value="#{payment.year}"/>
+                    </p:column>
+
+                    <p:column headerText="Лечебное учреждение" filterBy="#{payment.hosp}" filterMatchMode="exact">
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('VisitTable').filter()" style="width:250px;" >
+                                <f:selectItem itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{cmo.dictHosp.values()}" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <h:outputText value="#{payment.hosp}" />
+                    </p:column>
+
+                    <p:column headerText="Стоимость" sortBy="#{payment.cost}">
+                        <h:outputText value="#{payment.cost}" />
+                    </p:column>
+                </p:dataTable>
+
+                <p:chart id="graph" type="line" model="#{chartMsk.dateModel}" style="height:500px; width: 800px"/>
+
+            </h:panelGrid>
         </h:form>
     </h:body>
 

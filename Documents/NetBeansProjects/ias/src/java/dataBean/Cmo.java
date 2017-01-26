@@ -14,9 +14,11 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import list.VisitItem;
+import list.Money;
 
 /**
  *
@@ -26,6 +28,9 @@ import list.VisitItem;
 @SessionScoped
 public class Cmo implements Serializable {
 
+    private List<Money> payment;
+    private static List<Money> filteredPayment;
+
     db.DataConn db = new db.DataConn();
     Map<String, String> dictDoc = new HashMap<String, String>();
     Map<String, String> dictCatNameDoc = new HashMap<String, String>();
@@ -33,6 +38,11 @@ public class Cmo implements Serializable {
     Map<String, String> dictHosp = new HashMap<String, String>();
     Map<String, String> dictHospCat = new HashMap<String, String>();
     Map<String, String> dictTarif = new HashMap<String, String>();
+
+    @PostConstruct
+    public void init() {
+        payment = createPayment();
+    }
 
     public Cmo() {
 
@@ -130,6 +140,7 @@ public class Cmo implements Serializable {
     private ArrayList<String> months;
     private String monthsNum;
     private int total;
+    private String ly;
 
     public String getName() {
         setName();
@@ -144,6 +155,14 @@ public class Cmo implements Serializable {
         db.closeConn();
 
         this.name = nameComp.get(0).toString();
+    }
+
+    public String getLy() {
+        return ly;
+    }
+
+    public void setLy(String ly) {
+        this.ly = ly;
     }
 
     public String getMonthsNum() {
@@ -320,7 +339,6 @@ public class Cmo implements Serializable {
                     String tarif = yearVisit + cat_pat + cat_doc + dictHospCat.get(nameHosp);
                     dataVisit.add(new VisitItem(dateVisit, dictHosp.get(nameHosp), s, dictCat.get(cat_doc), dictTarif.get(tarif)));
                 }
-                int aaa = 0;
             }
             int sum = 0;
             for (int i = 0; i < dataVisit.size(); i++) {
@@ -348,5 +366,99 @@ public class Cmo implements Serializable {
 
         Period period = Period.between(firstDate, secondDate);
         return period.getYears();
+    }
+
+    private List<Money> createPayment() {
+
+        List<Money> list = new ArrayList<Money>();
+        //add from db
+        db.DataConn db = new db.DataConn();
+        db.qeuryRequest("select * from Get_money where id_msk = " + User.getId_cmo() + ";");
+
+        ArrayList id_hosp = db.queryField("id_hosp");
+        ArrayList date = db.queryField("date");
+        ArrayList sum = db.queryField("sum");
+
+        try {
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            for (int i = 0; i < id_hosp.size(); i++) {
+                //удалить []
+                String id_hospital = id_hosp.get(i).toString();
+                id_hospital = id_hospital.substring(1, id_hospital.length() - 1);
+                String year = df.format(date.get(i));
+                String summa = sum.get(i).toString();
+                String hospital = dictHosp.get(id_hospital);
+
+                list.add(new Money(year, summa, hospital));
+            }
+        } catch (Exception e) {
+
+        } finally {
+            db.closeConn();
+        }
+
+        setFilteredPayment(list);
+        return list;
+    }
+
+    public List<Money> getPayment() {
+        return payment;
+    }
+
+    public void setPayment(List<Money> payment) {
+        this.payment = payment;
+    }
+
+    public static List<Money> getFilterPayForGraph() {
+        return filteredPayment;
+    }
+
+    public List<Money> getFilteredPayment() {
+        return filteredPayment;
+    }
+
+    public void setFilteredPayment(List<Money> filteredPayment) {
+        Cmo.filteredPayment = filteredPayment;
+    }
+
+    public Map<String, String> getDictHosp() {
+        return dictHosp;
+    }
+
+    public void setDictHosp(Map<String, String> dictHosp) {
+        this.dictHosp = dictHosp;
+    }
+
+    public void savePayment() {
+        //сформировать счет  с учетом больницы
+            try {
+                db.DataConn db = new db.DataConn();
+                String ly_name = getLy();
+                String ly_id = getKeyByValue(dictHosp, ly_name);
+                db.qeuryRequest("select from Get_money where date in ('" + getYear() + "-" + getMonthsNum() + "-01 00:00:00') and"
+                        + " id_hosp = " + ly_id + " and id_msk = " + User.getId_cmo() + ";");
+                ArrayList money_id = db.queryField("@rid");
+                
+                if (money_id.size() == 0) {
+                    db.qeuryRun("INSERT INTO Get_money (date, sum, id_msk, id_hosp) VALUES "
+                            + "('" + getYear() + "-" + getMonthsNum() + "-01 00:00:00', " + getTotal() + ", " + User.getId_cmo() + ", " + ly_id + ");");
+                } else {
+                    String id = money_id.get(0).toString();
+                    db.qeuryRun("UPDATE Get_money SET sum = " + getTotal() + " WHERE @rid = " + id + ";");
+                }
+            } catch (Exception e) {
+
+            } finally {
+                //db.closeConn();
+            }
+    }
+
+    public <K, V> K getKeyByValue(Map<K, V> map, V value) {
+        for (Map.Entry<K, V> entry : map.entrySet()) {
+            if (value.equals(entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 }
