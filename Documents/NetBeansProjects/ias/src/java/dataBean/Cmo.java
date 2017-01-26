@@ -298,8 +298,11 @@ public class Cmo implements Serializable {
 
 // Get the number of days in that month
                 int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH); // 28
+                
+                String ly_name = getLy();
+                String ly_id = getKeyByValue(dictHosp, ly_name);
 
-                db.qeuryRequest("select from Visits where id_regs = " + id.get(j).toString() + " and date > DATE('" + getYear() + "-" + getMonthsNum() + "-01 00:00:00') and "
+                db.qeuryRequest("select from Visits where id_regs = " + id.get(j).toString() + " and id_hosp = " + ly_id + " and date > DATE('" + getYear() + "-" + getMonthsNum() + "-01 00:00:00') and "
                         + "date < DATE('" + getYear() + "-" + getMonthsNum() + "-" + daysInMonth + " 00:00:00');");
 
                 ArrayList ish_dataVisit = db.queryField("date");
@@ -430,7 +433,6 @@ public class Cmo implements Serializable {
     }
 
     public void savePayment() {
-        //сформировать счет  с учетом больницы
             try {
                 db.DataConn db = new db.DataConn();
                 String ly_name = getLy();
