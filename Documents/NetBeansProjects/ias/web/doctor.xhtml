@@ -1,12 +1,60 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Личный кабинет клиента</title>
+        <link href="css/client.css" rel="stylesheet" type="text/css" />
     </h:head>
-    <h:body>
-        Hello from #{user.id_doctor}
-    </h:body>
-</html>
 
+    <h:body>
+        <h:form>
+            <div align="right">
+                <h2>Здравствуйте #{doctor.fi}</h2>
+                <h3>
+                    <p:commandLink action="#{user.finishSession()}" value="Выход"/>
+                </h3>
+            </div>
+
+            <div align="center">
+                <h1>Добро пожаловать в личный кабинет</h1>
+            </div>
+
+            <table width="90%">
+                <tr style="vertical-align: top">
+                    <td>
+                        <p:outputLabel style="font-size: 25px" id="d">Пациенты на выбранную дату:  #{doctor.selectedDateString}</p:outputLabel>
+                        
+                        <p:dataTable id="table2" scrollable="true" scrollHeight="700" style="width: 950px" var="patients" value="#{doctor.patients}"
+                                     widgetVar="VisitTable" filteredValue="#{doctor.filteredPatients}">
+                            <p:column headerText="Дата">
+                                <h:outputText value="#{patients.date}"/>
+                            </p:column>
+
+                            <p:column headerText="Время" sortBy="#{patients.time}">
+                                <h:outputText value="#{patients.time}"/>
+                            </p:column>
+
+                            <p:column headerText="Фамилия">
+                                <h:outputText value="#{patients.fam}"/>
+                            </p:column>
+
+                            <p:column headerText="Имя">
+                                <h:outputText value="#{patients.im}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </td>
+                    <td>
+                        <p:calendar value="#{doctor.selectedDate}" mode="inline">
+                            <p:ajax event="dateSelect" update="table2, d" listener="#{doctor.init()}"/>
+                        </p:calendar>
+                    </td>
+                </tr>
+            </table>
+
+        </h:form>
+    </h:body>
+
+</html>

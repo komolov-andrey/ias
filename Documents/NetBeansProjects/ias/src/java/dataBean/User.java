@@ -20,7 +20,7 @@ public class User implements Serializable {
     private String password;
 
     private static String id_regs;
-    private String id_doctor;
+    private static String id_doctor;
     private String id_hosp;
     private static String id_cmo;
 
@@ -32,7 +32,7 @@ public class User implements Serializable {
             this.id_regs = id_regs;
     }
 
-    public String getId_doctor() {
+    public static String getId_doctor() {
         return id_doctor;
     }
 
@@ -102,7 +102,9 @@ public class User implements Serializable {
                     return "client?faces-redirect=true";
                 }
                 if (doctor.get(0) != null) {
-                    setId_doctor(doctor.get(0).toString());
+                     //удалить []
+                    String str = doctor.get(0).toString();
+                    setId_doctor(str.substring(1, str.length() - 1));
                     return "doctor?faces-redirect=true";
                 }
                 if (hospital.get(0) != null) {
