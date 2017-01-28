@@ -26,9 +26,9 @@
                 <tr style="vertical-align: top">
                     <td>
                         <p:outputLabel style="font-size: 25px" id="d">Пациенты на выбранную дату:  #{doctor.selectedDateString}</p:outputLabel>
-                        
+
                         <p:dataTable id="table2" scrollable="true" scrollHeight="700" style="width: 950px" var="patients" value="#{doctor.patients}"
-                                     widgetVar="VisitTable" filteredValue="#{doctor.filteredPatients}">
+                                     widgetVar="VisitTable" selection="#{doctor.selectedPatient}" selectionMode="single" rowKey="#{patients.id}">
                             <p:column headerText="Дата">
                                 <h:outputText value="#{patients.date}"/>
                             </p:column>
@@ -45,6 +45,10 @@
                                 <h:outputText value="#{patients.im}"/>
                             </p:column>
                         </p:dataTable>
+
+                        <p:contextMenu for="table2">
+                            <p:menuitem value="Удалить" update="table2" icon="ui-icon-close" actionListener="#{doctor.deletePatient()}"/>
+                        </p:contextMenu>
                     </td>
                     <td>
                         <p:calendar value="#{doctor.selectedDate}" mode="inline">

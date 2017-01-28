@@ -28,7 +28,7 @@ public class Doctor implements Serializable {
     private Date selectedDate;
     private String selectedDateString = "";
     private List<PatientItem> patients;
-    private List<PatientItem> filteredPatients;
+    private PatientItem selectedPatient;
 
     @PostConstruct
     public void init() {
@@ -56,6 +56,14 @@ public class Doctor implements Serializable {
         this.fi = fi;
     }
 
+    public PatientItem getSelectedPatient() {
+        return selectedPatient;
+    }
+
+    public void setSelectedPatient(PatientItem selectedPatient) {
+        this.selectedPatient = selectedPatient;
+    }
+
     public Date getSelectedDate() {
         return selectedDate;
     }
@@ -81,18 +89,11 @@ public class Doctor implements Serializable {
         return patients;
     }
 
-    public List<PatientItem> getFilteredPatients() {
-        return filteredPatients;
-    }
-
-    public void setFilteredPatients(List<PatientItem> filteredPatients) {
-        this.filteredPatients = filteredPatients;
-    }
-
     public void setPatients(List<PatientItem> patients) {
         this.patients = patients;
     }
 
+            
     public List<PatientItem> setPatientTable() {
 
         List<PatientItem> list = new ArrayList<PatientItem>();
@@ -226,5 +227,30 @@ public class Doctor implements Serializable {
             list.add(new PatientItem(year, times.get(i).toString(), fam.get(0).toString(), name.get(0).toString()));
         }
         return list;
+    }
+    
+    public void deletePatient() {
+        
+        patients.remove(selectedPatient);
+        
+        //добавить в visits
+        db.DataConn db = new db.DataConn();
+        
+        db.qeuryRequest("select from Regs where fam = '" + selectedPatient.getFam() + "' and name = '" + selectedPatient.getIm() + "';");
+        String id_u = db.queryField("@rid").get(0).toString();
+        
+        //1 doctor in 1 hospital
+        db.qeuryRequest("select from Doctors where @rid = " + User.getId_doctor() + ";");
+        String id_h = db.queryField("id_hosp").get(0).toString();
+        id_h = id_h.substring(1, id_h.length() - 1);
+        
+        db.qeuryRun("INSERT INTO Visits (date, id_regs, id_doctor, id_hosp) VALUES (DATE('" + selectedPatient.getDate() + " 00:00:00'), " + id_u +
+                ", " + User.getId_doctor() + ", " + id_h +");");
+        
+        //удалить из appointments
+       db.qeuryRun("delete from Appoinments where id_doctor = " + User.getId_doctor()
+                    + " and date in ('" + selectedPatient.getDate() + " 00:00:00') and id_regs = " + id_u + ";");
+        
+        selectedPatient = null;
     }
 }

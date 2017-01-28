@@ -22,6 +22,7 @@ public class PatientItem {
     private String time;
     private String fam;
     private String im;
+    private String id;
 
     public PatientItem(String year, String time, String fam, String im) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -30,6 +31,7 @@ public class PatientItem {
         this.time = time;
         this.fam = fam;
         this.im = im;
+        this.id = year1 + time + fam + im;
     }
 
     public LocalDate getDate() {
@@ -64,5 +66,11 @@ public class PatientItem {
         this.im = im;
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }
