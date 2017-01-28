@@ -448,6 +448,8 @@ public class Cmo implements Serializable {
                     String id = money_id.get(0).toString();
                     db.qeuryRun("UPDATE Get_money SET sum = " + getTotal() + " WHERE @rid = " + id + ";");
                 }
+                
+                init();
             } catch (Exception e) {
 
             } finally {

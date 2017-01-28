@@ -32,8 +32,7 @@
                         <div>
                             <p:commandButton value="Сформировать счет" action="#{cmo.createVisits()}" update=":#{p:component('sum')}" style="display: inline" />
                             <p:outputLabel id="sum" style="display: inline">Итого #{cmo.total} &nbsp;&nbsp;</p:outputLabel>
-                            <!-- не работает update даже при перезагрузке страницы на table -->
-                            <p:commandButton value="Сохранить" action="#{cmo.savePayment()}" update=":#{p:component('table')}, :#{p:component('graph')}" style="display: inline" />
+                            <p:commandButton value="Сохранить" action="#{cmo.savePayment()}" update=":#{p:component('table')}" style="display: inline" />
                         </div>
                         <table width="40%">
                             <tr>
