@@ -21,7 +21,7 @@ public class User implements Serializable {
 
     private static String id_regs;
     private static String id_doctor;
-    private String id_hosp;
+    private static String id_hosp;
     private static String id_cmo;
 
     public static String getId_regs() {
@@ -40,7 +40,7 @@ public class User implements Serializable {
         this.id_doctor = id_doctor;
     }
 
-    public String getId_hosp() {
+    public static String getId_hosp() {
         return id_hosp;
     }
 
@@ -108,7 +108,9 @@ public class User implements Serializable {
                     return "doctor?faces-redirect=true";
                 }
                 if (hospital.get(0) != null) {
-                    setId_hosp(hospital.get(0).toString());
+                    //удалить []
+                    String str = hospital.get(0).toString();
+                    setId_hosp(str.substring(1, str.length() - 1));
                     return "hospital?faces-redirect=true";
                 }
                 if (admin.get(0).equals(true)) {

@@ -1,12 +1,57 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Личный кабинет клиента</title>
     </h:head>
-    <h:body>
-        Hello from #{user.id_hosp}
-    </h:body>
-</html>
 
+    <h:body>
+        <h:form>
+            <div align="right">
+                <h2>Здравствуйте #{hospital.name}</h2>
+                <h3>
+                    <p:commandLink action="#{user.finishSession()}" value="Выход"/>
+                </h3>
+            </div>
+
+            <div align="center">
+                <h1>Добро пожаловать в личный кабинет</h1>
+            </div>
+
+            <table width="90%">
+                <tr>
+                    <td>
+                        <h3>Количество прикрепленных #{hospital.countClients}</h3>
+                        <p:graphicImage id="plus" url="images/plus.jpg" style="width: 50px" onclick="PF('dlg').show();"/>
+                        <p:tooltip for="plus" value="Прикрепить нового клиента" trackMouse="true" />
+                    </td>
+                </tr>
+            </table>
+
+            <p:dialog header="Прикрепление клиента" widgetVar="dlg" resizable="false">
+                <h:panelGrid columns="3" cellpadding="5">
+                    <h:outputLabel for="enp" value="ЕНП:" />
+                    <p:inputMask id="enp" mask="9999 9999 9999 9999" value="#{hospital.enp}" required="true" label="ЕНП" />
+                    <p:commandButton update="msg, fam, im, dr" value="Поиск" actionListener="#{hospital.findClient()}"/>
+
+                    <h:outputLabel id="fam" value="Фамилия: #{hospital.fam}" />
+                    <h:outputLabel id="im" value="Имя: #{hospital.im}" />
+                    <h:outputLabel id="dr" value="Дата рождения: #{hospital.dr}" />
+                    
+                    <f:facet name="footer">
+                        <p:commandButton value="Прикрепить" actionListener="#{hospital.addClient()}"
+                                         oncomplete="PF('dlg').hide()" />
+                    </f:facet>  
+                </h:panelGrid>
+                
+                <p:messages id="msg"/>
+                
+            </p:dialog>
+
+        </h:form>
+    </h:body>
+
+</html>
