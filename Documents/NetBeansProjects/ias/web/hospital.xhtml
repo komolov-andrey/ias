@@ -6,6 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Личный кабинет клиента</title>
+        <link href="css/client.css" rel="stylesheet" type="text/css" />
     </h:head>
 
     <h:body>
@@ -21,14 +22,14 @@
                 <h1>Добро пожаловать в личный кабинет</h1>
             </div>
 
-            <table>
+            <table width="100%">
                 <tr>
                     <td>
                         <h3>Количество прикрепленных #{hospital.countClients}</h3>
                         <p:graphicImage id="plus" url="images/plus.jpg" style="width: 50px" onclick="PF('dlg').show();"/>
                         <p:tooltip for="plus" value="Прикрепить нового клиента" trackMouse="true" />
                     </td>
-                    <td>
+                    <td style="right: 15px; position: absolute">
                         <p:graphicImage id="time" url="images/time.jpg" style="width: 200px" onclick="PF('dlgTime').show();"/>
                         <p:tooltip for="time" value="Изменить график работы врача" trackMouse="true" />
                     </td>
@@ -85,6 +86,54 @@
                 <p:commandButton value="Нерабочий день" actionListener="#{hospital.addDoctorHoliday()}" update="msgTime"/>
                 <p:messages id="msgTime"/>
             </p:dialog>
+
+            <table align="center">
+                <tr>
+                    <td id="widthTable">
+                        <p:graphicImage url="images/stream.png" width="200px"/>
+                        <h2 align="center">Поток пациентов</h2>
+                    </td>
+
+                    <td id="widthTable">
+                        <p:graphicImage url="images/stuff.jpg" width="200px"/>
+                        <h2 align="center">Список сотрудников</h2>
+                    </td>
+
+                    <td id="widthTable">
+                        <p:graphicImage url="images/money.jpg" width="200px" height="150px"/>
+                        <h2 align="center">Объем финансирования</h2>
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td>
+                        <p:commandLink actionListener="#{hospital.showStream()}" update="showStream, showStuff, showMoney">Подробнее</p:commandLink>
+                    </td>
+                    <td>
+                        <p:commandLink actionListener="#{hospital.showStuff()}" update="showStream, showStuff, showMoney">Подробнее</p:commandLink>
+                    </td>
+                    <td>
+                        <p:commandLink actionListener="#{hospital.showMoney()}" update="showStream, showStuff, showMoney">Подробнее</p:commandLink>
+                    </td>
+                </tr>
+            </table>
+
+            <p:outputPanel id="showStream" >
+                <p:panel rendered="#{hospital.showStream}">
+                    <h2>this is sream</h2>
+                </p:panel>
+            </p:outputPanel>
+
+            <p:outputPanel id="showStuff" >
+                <p:panel rendered="#{hospital.showStuff}">
+                    <h2>this is stuff</h2>
+                </p:panel>
+            </p:outputPanel>
+
+            <p:outputPanel id="showMoney" >
+                <p:panel rendered="#{hospital.showMoney}">
+                    <h2>this is money</h2>
+                </p:panel>
+            </p:outputPanel>
 
         </h:form>
     </h:body>

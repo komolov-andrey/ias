@@ -37,6 +37,10 @@ public class Hospital implements Serializable {
     private ArrayList<String> doctors;
     private String selectedDateString;
     private Date selectedDate;
+    
+    private static boolean showStream = false;
+    private static boolean showStuff = false;
+    private static boolean showMoney = false;
 
     public String getFamDoc() {
         return famDoc;
@@ -244,5 +248,44 @@ public class Hospital implements Serializable {
         } finally {
             db.closeConn();
         }
+    }
+
+    public boolean isShowStream() {
+        return showStream;
+    }
+
+    public static void setShowStream(boolean showStream) {
+        Hospital.showStream = showStream;
+    }
+
+    public boolean isShowStuff() {
+        return showStuff;
+    }
+
+    public static void setShowStuff(boolean showStuff) {
+        Hospital.showStuff = showStuff;
+    }
+
+    public boolean isShowMoney() {
+        return showMoney;
+    }
+
+    public static void setShowMoney(boolean showMoney) {
+        Hospital.showMoney = showMoney;
+    }
+    public void showStream(){
+        setShowStream(true);
+        setShowMoney(false);
+        setShowStuff(false);
+    }
+    public void showStuff(){
+        setShowStream(false);
+        setShowMoney(false);
+        setShowStuff(true);
+    }
+    public void showMoney(){
+        setShowStream(false);
+        setShowMoney(true);
+        setShowStuff(false);
     }
 }
