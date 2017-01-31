@@ -21,12 +21,16 @@
                 <h1>Добро пожаловать в личный кабинет</h1>
             </div>
 
-            <table width="90%">
+            <table>
                 <tr>
                     <td>
                         <h3>Количество прикрепленных #{hospital.countClients}</h3>
                         <p:graphicImage id="plus" url="images/plus.jpg" style="width: 50px" onclick="PF('dlg').show();"/>
                         <p:tooltip for="plus" value="Прикрепить нового клиента" trackMouse="true" />
+                    </td>
+                    <td>
+                        <p:graphicImage id="time" url="images/time.jpg" style="width: 200px" onclick="PF('dlgTime').show();"/>
+                        <p:tooltip for="time" value="Изменить график работы врача" trackMouse="true" />
                     </td>
                 </tr>
             </table>
@@ -34,21 +38,52 @@
             <p:dialog header="Прикрепление клиента" widgetVar="dlg" resizable="false">
                 <h:panelGrid columns="3" cellpadding="5">
                     <h:outputLabel for="enp" value="ЕНП:" />
-                    <p:inputMask id="enp" mask="9999 9999 9999 9999" value="#{hospital.enp}" required="true" label="ЕНП" />
+                    <p:inputMask id="enp" mask="9999 9999 9999 9999" value="#{hospital.enp}"/>
                     <p:commandButton update="msg, fam, im, dr" value="Поиск" actionListener="#{hospital.findClient()}"/>
 
                     <h:outputLabel id="fam" value="Фамилия: #{hospital.fam}" />
                     <h:outputLabel id="im" value="Имя: #{hospital.im}" />
                     <h:outputLabel id="dr" value="Дата рождения: #{hospital.dr}" />
-                    
+
                     <f:facet name="footer">
                         <p:commandButton value="Прикрепить" actionListener="#{hospital.addClient()}"
                                          oncomplete="PF('dlg').hide()" />
                     </f:facet>  
                 </h:panelGrid>
-                
+
                 <p:messages id="msg"/>
-                
+
+            </p:dialog>
+
+            <p:dialog header="Изменение графика работы врача" widgetVar="dlgTime" resizable="false">
+                <table>
+                    <tr>
+                        <td>
+                            <h:outputLabel for="doc" value="Выберите врача   " />
+                            <p:selectOneMenu id="doc" value="#{hospital.fioDoc}" filter="true">
+                                <f:selectItem itemLabel="" itemValue="" />
+                                <f:selectItems value="#{hospital.doctors}" />
+                                <p:ajax event="valueChange" update="fio" listener="#{hospital.findDoctor()}" />
+                            </p:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel id="fio" value="Выбранный врач: #{hospital.fioDoc}" /> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel id="date" value="Выбранная дата: #{hospital.selectedDateString}" />
+                        </td>
+                    </tr>
+                </table>
+                <p:calendar value="#{hospital.selectedDate}" mode="inline">
+                    <p:ajax event="dateSelect" update="date"/>
+                </p:calendar>
+
+                <p:commandButton value="Нерабочий день" actionListener="#{hospital.addDoctorHoliday()}" update="msgTime"/>
+                <p:messages id="msgTime"/>
             </p:dialog>
 
         </h:form>
