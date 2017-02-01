@@ -121,9 +121,7 @@
                 <p:panel rendered="#{hospital.showStream}">
                     
                     <h:panelGrid columns="2">
-                        <p:dataTable id="table" scrollable="true" scrollHeight="700" style="width: 950px" var="visits" value="#{stream.visits}"
-                                     widgetVar="VisitTable">
-                            <!--<p:ajax event="filter" update=":#//{p:component('graph')}"/>-->
+                        <p:dataTable id="table" style="width: 950px; vertical-align: top" var="visits" value="#{stream.visits}" widgetVar="VisitTable">
 
                             <p:column headerText="Время" sortBy="#{visits.time}">
                                 <h:outputText value="#{visits.time}"/>
@@ -139,7 +137,7 @@
                             
                         </p:dataTable>
 
-                        <!--<p:chart id="graph" type="line" model="#//{chartMsk.dateModel}" style="height:500px; width: 800px"/>-->
+                        <p:chart id="graph" type="line" model="#{chartHospital.dateModel}" style="height:500px; width: 800px; vertical-align: top"/>
 
                     </h:panelGrid>
                     

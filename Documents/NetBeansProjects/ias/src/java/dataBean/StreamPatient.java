@@ -27,11 +27,12 @@ import list.StreamItem;
 public class StreamPatient implements Serializable {
 
     private List<StreamItem> visits;
+    private static List<StreamItem> visitsForGraph;
     Map<String, Integer> dictTime;
 
     @PostConstruct
     public void init() {
-        visits = setVisitsTable();
+        visits = visitsForGraph = setVisitsTable();
     }
 
     public StreamPatient() {
@@ -99,14 +100,14 @@ public class StreamPatient implements Serializable {
         for (int s : dictTime.values()) {
             sum += s;
         }
-        if (sum == 0){
-            sum=1;
+        if (sum == 0) {
+            sum = 1;
         }
-        
+
         for (Map.Entry<String, Integer> entry : dictTime.entrySet()) {
             String key = entry.getKey();
             int value = entry.getValue();
-            float f = value*100/sum;
+            float f = value * 100 / sum;
             list.add(new StreamItem(key, value, f));
         }
 
@@ -115,6 +116,9 @@ public class StreamPatient implements Serializable {
 
     public List<StreamItem> getVisits() {
         return visits;
+    }
+    public static List<StreamItem> getVisitsForGraph() {
+        return visitsForGraph;
     }
 
     public void setVisits(List<StreamItem> visits) {
