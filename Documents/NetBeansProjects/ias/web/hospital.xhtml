@@ -117,9 +117,32 @@
                 </tr>
             </table>
 
-            <p:outputPanel id="showStream" >
+            <p:outputPanel id="showStream">
                 <p:panel rendered="#{hospital.showStream}">
-                    <h2>this is sream</h2>
+                    
+                    <h:panelGrid columns="2">
+                        <p:dataTable id="table" scrollable="true" scrollHeight="700" style="width: 950px" var="visits" value="#{stream.visits}"
+                                     widgetVar="VisitTable">
+                            <!--<p:ajax event="filter" update=":#//{p:component('graph')}"/>-->
+
+                            <p:column headerText="Время" sortBy="#{visits.time}">
+                                <h:outputText value="#{visits.time}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Количество человек" sortBy="#{visits.count}">
+                                <h:outputText value="#{visits.count}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Процентное соотношение" sortBy="#{visits.percent}">
+                                <h:outputText value="#{visits.percent}"/>
+                            </p:column>
+                            
+                        </p:dataTable>
+
+                        <!--<p:chart id="graph" type="line" model="#//{chartMsk.dateModel}" style="height:500px; width: 800px"/>-->
+
+                    </h:panelGrid>
+                    
                 </p:panel>
             </p:outputPanel>
 
