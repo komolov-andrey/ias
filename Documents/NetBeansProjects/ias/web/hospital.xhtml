@@ -176,7 +176,7 @@
                                 <h:outputText value="#{money.year}"/>
                             </p:column>
 
-                            <p:column headerText="Месяц" filterBy="#{money.monthStr}" sortBy="#{money.monthStr}" filterMatchMode="exact">
+                            <p:column headerText="Месяц" filterBy="#{money.monthStr}" filterMatchMode="exact">
                                 <f:facet name="filter">
                                     <p:selectOneMenu onchange="PF('MoneyTable').filter()" style="width:200px;" >
                                         <f:selectItem itemValue="#{null}" noSelectionOption="true" />
@@ -202,7 +202,38 @@
                             </p:column>
                         </p:dataTable>
 
-                        <!--<p:chart id="graph" type="line" model="#//{chartHospital.dateModel}" style="height:500px; width: 800px; vertical-align: top"/>-->
+                        <table>
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <h:outputText value="Веберите год"/>
+                                                
+                                                <p:selectOneMenu value="#{chartHospitalCmo.year}" filter="true">
+                                                    <f:selectItem itemValue="#{null}" noSelectionOption="true" />
+                                                    <f:selectItems value="#{moneyOmc.dictYear.values()}" />
+                                                </p:selectOneMenu>
+                                                
+                                                <h:outputText value="Веберите СМО"/>
+                                                
+                                                <p:selectOneMenu value="#{chartHospitalCmo.cmo}" filter="true">
+                                                    <f:selectItem itemValue="#{null}" noSelectionOption="true" />
+                                                    <f:selectItems value="#{moneyOmc.dictMsk.values()}" />
+                                                </p:selectOneMenu>
+                                            </td>
+                                            <td>
+                                                <p:commandLink value="Построить" action="#{chartHospitalCmo.init()}" update="graphCmo" style="color: red"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <p:chart id="graphCmo" type="line" model="#{chartHospitalCmo.dateModel}" style="height:500px; width: 800px; vertical-align: top"/>
+
+                            </tr>
+                        </table>
 
                     </h:panelGrid>
                 </p:panel>

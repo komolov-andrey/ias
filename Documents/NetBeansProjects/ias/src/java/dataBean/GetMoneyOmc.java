@@ -27,12 +27,17 @@ public class GetMoneyOmc implements Serializable {
 
     private List<MoneyOmc> money;
     private List<MoneyOmc> filterMoney;
+    private static List<MoneyOmc> moneyForGraph;
     Map<String, String> dictMsk = new HashMap<String, String>();
     Map<Integer, String> dictMonth = new HashMap<Integer, String>();
+    
+    private static Map<String, String> dictMskForGraph = new HashMap<String, String>();
+    private Map<Integer, String> dictYear = new HashMap<Integer, String>();
+    private static Map<Integer, String> dictYearForGraph = new HashMap<Integer, String>();
 
     @PostConstruct
     public void init() {
-        money = createTable();
+        money = moneyForGraph = createTable();
     }
     public GetMoneyOmc(){
         
@@ -49,6 +54,7 @@ public class GetMoneyOmc implements Serializable {
         dictMonth.put(10, "Октябрь");
         dictMonth.put(11, "Ноябрь");
         dictMonth.put(12, "Декабрь");
+        
     }
 
     public List<MoneyOmc> createTable() {
@@ -63,6 +69,7 @@ public class GetMoneyOmc implements Serializable {
             String id = db.queryField("@rid").get(i).toString();
             String name = db.queryField("name").get(i).toString();
             dictMsk.put(id, name);
+            dictMskForGraph.put(id, name);
         }
 
         db.qeuryRequest("select from Get_money where id_hosp = " + User.getId_hosp() + ";");
@@ -75,7 +82,10 @@ public class GetMoneyOmc implements Serializable {
         DateFormat df_m = new SimpleDateFormat("MM");
         try {
             for (int i = 0; i < db.getResult().size(); i++) {
-                int year = Integer.parseInt(df_y.format(date.get(i)));
+                String yearStr = df_y.format(date.get(i));
+                int year = Integer.parseInt(yearStr);
+                dictYear.put(year, yearStr);
+                
                 int month = Integer.parseInt(df_m.format(date.get(i)));
                 String monthStr = dictMonth.get(month);
                 float count = Float.parseFloat(sum.get(i).toString());
@@ -90,6 +100,7 @@ public class GetMoneyOmc implements Serializable {
         } finally {
             db.closeConn();
         }
+        dictYearForGraph = dictYear;
 
         return list;
     }
@@ -106,16 +117,16 @@ public class GetMoneyOmc implements Serializable {
         return dictMsk;
     }
 
-    public void setDictMsk(Map<String, String> dictMsk) {
-        this.dictMsk = dictMsk;
-    }
-
     public Map<Integer, String> getDictMonth() {
         return dictMonth;
     }
 
-    public void setDictMonth(Map<Integer, String> dictMonth) {
-        this.dictMonth = dictMonth;
+    public static Map<String, String> getDictMskForGraph() {
+        return dictMskForGraph;
+    }
+
+    public static Map<Integer, String> getDictYearForGraph() {
+        return dictYearForGraph;
     }
 
     public List<MoneyOmc> getFilterMoney() {
@@ -124,6 +135,14 @@ public class GetMoneyOmc implements Serializable {
 
     public void setFilterMoney(List<MoneyOmc> filterMoney) {
         this.filterMoney = filterMoney;
+    }
+
+    public static List<MoneyOmc> getMoneyForGraph() {
+        return moneyForGraph;
+    }    
+
+    public Map<Integer, String> getDictYear() {
+        return dictYear;
     }
     
 }
