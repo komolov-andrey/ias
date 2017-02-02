@@ -119,34 +119,50 @@
 
             <p:outputPanel id="showStream">
                 <p:panel rendered="#{hospital.showStream}">
-                    
+
                     <h:panelGrid columns="2">
                         <p:dataTable id="table" style="width: 950px; vertical-align: top" var="visits" value="#{stream.visits}" widgetVar="VisitTable">
 
                             <p:column headerText="Время" sortBy="#{visits.time}">
                                 <h:outputText value="#{visits.time}"/>
                             </p:column>
-                            
+
                             <p:column headerText="Количество человек" sortBy="#{visits.count}">
                                 <h:outputText value="#{visits.count}"/>
                             </p:column>
-                            
+
                             <p:column headerText="Процентное соотношение" sortBy="#{visits.percent}">
                                 <h:outputText value="#{visits.percent}"/>
                             </p:column>
-                            
+
                         </p:dataTable>
 
                         <p:chart id="graph" type="line" model="#{chartHospital.dateModel}" style="height:500px; width: 800px; vertical-align: top"/>
 
                     </h:panelGrid>
-                    
+
                 </p:panel>
             </p:outputPanel>
 
             <p:outputPanel id="showStuff" >
                 <p:panel rendered="#{hospital.showStuff}">
-                    <h2>this is stuff</h2>
+                    <p:dataTable var="doc" value="#{listDoctors.doctors}" widgetVar="docTable">
+
+                        <p:column headerText="Категория" filterMatchMode="contains" filterBy="#{doc.cat}" sortBy="#{doc.cat}">
+                            <h:outputText value="#{doc.cat}" />
+                        </p:column>
+                        <p:column headerText="Фамилия" filterBy="#{doc.fam}" sortBy="#{doc.fam}" filterMatchMode="contains">
+                            <h:outputText value="#{doc.fam}" />
+                        </p:column>
+
+                        <p:column sortBy="#{doc.im}" headerText="Имя" filterMatchMode="contains">
+                            <h:outputText value="#{doc.im}" />
+                        </p:column>
+                        
+                        <p:column sortBy="#{doc.percent}" headerText="Процентное соотношение">
+                            <h:outputText value="#{doc.percent}" />
+                        </p:column>
+                    </p:dataTable>
                 </p:panel>
             </p:outputPanel>
 
