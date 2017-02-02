@@ -158,7 +158,7 @@
                         <p:column sortBy="#{doc.im}" headerText="Имя" filterMatchMode="contains">
                             <h:outputText value="#{doc.im}" />
                         </p:column>
-                        
+
                         <p:column sortBy="#{doc.percent}" headerText="Процентное соотношение">
                             <h:outputText value="#{doc.percent}" />
                         </p:column>
@@ -168,7 +168,43 @@
 
             <p:outputPanel id="showMoney" >
                 <p:panel rendered="#{hospital.showMoney}">
-                    <h2>this is money</h2>
+                    <h:panelGrid columns="2">
+                        <p:dataTable scrollable="true" scrollHeight="700" id="tableMoney" filteredValue="#{moneyOmc.filterMoney}" style="width: 950px; vertical-align: top" 
+                                     var="money" value="#{moneyOmc.money}" widgetVar="MoneyTable">
+
+                            <p:column headerText="Год" filterBy="#{money.year}" sortBy="#{money.year}">
+                                <h:outputText value="#{money.year}"/>
+                            </p:column>
+
+                            <p:column headerText="Месяц" filterBy="#{money.monthStr}" sortBy="#{money.monthStr}" filterMatchMode="exact">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('MoneyTable').filter()" style="width:200px;" >
+                                        <f:selectItem itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{moneyOmc.dictMonth.values()}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <h:outputText value="#{money.monthStr}" />
+                            </p:column>
+
+                            <p:column headerText="Сумма" sortBy="#{money.sum}">
+                                <h:outputText value="#{money.sum}"/>
+                            </p:column>
+
+
+                            <p:column headerText="СМО" filterBy="#{money.cmo}" filterMatchMode="exact">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('MoneyTable').filter()" style="width:200px;" >
+                                        <f:selectItem itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{moneyOmc.dictMsk.values()}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <h:outputText value="#{money.cmo}" />
+                            </p:column>
+                        </p:dataTable>
+
+                        <!--<p:chart id="graph" type="line" model="#//{chartHospital.dateModel}" style="height:500px; width: 800px; vertical-align: top"/>-->
+
+                    </h:panelGrid>
                 </p:panel>
             </p:outputPanel>
 
