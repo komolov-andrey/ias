@@ -1,12 +1,158 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Личный кабинет пользователя</title>
     </h:head>
     <h:body>
-        Hello from Government
+        <h:form>
+            <div align="right">
+                <h2>Здравствуйте Государство</h2>
+                <h3>
+                    <p:commandLink action="#{user.finishSession()}" value="Выход"/>
+                </h3>
+            </div>
+
+            <div align="center">
+                <h1>Добро пожаловать в личный кабинет</h1>
+            </div>
+
+            <p:accordionPanel activeIndex="-1" style="width: 70%; margin: 0 auto">
+                <p:tab title="Отобразить объем перечисленных средств">
+
+                    <p:outputLabel id="totalMoney" style="font-size: 20px; color: red; font-weight: bold"
+                                   value="Итого #{moneyGov.totalMoney} руб."/>
+                    <br/>
+
+                    <p:dataTable scrollable="true" scrollHeight="600" filteredValue="#{moneyGov.filterMoney}"
+                                 var="money" value="#{moneyGov.money}" widgetVar="MoneyTable">
+
+                        <p:column headerText="Год" filterBy="#{money.year}" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('MoneyTable').filter()" style="width:200px;" >
+                                    <f:selectItem itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{moneyGov.dictYear.values()}" />
+                                    <p:ajax event="change" update=":#{p:component('totalMoney')}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{money.year}" />
+                        </p:column>
+
+                        <p:column headerText="Месяц" filterBy="#{money.monthStr}" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('MoneyTable').filter()" style="width:200px;" >
+                                    <f:selectItem itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{moneyGov.dictMonth.values()}" />
+                                    <p:ajax event="change" update=":#{p:component('totalMoney')}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{money.monthStr}" />
+                        </p:column>
+
+                        <p:column headerText="Сумма" sortBy="#{money.sum}">
+                            <h:outputText value="#{money.sum}"/>
+                        </p:column>
+
+
+                        <p:column headerText="СМО" filterBy="#{money.cmo}" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('MoneyTable').filter()" style="width:200px;" >
+                                    <f:selectItem itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{moneyGov.dictMsk.values()}" />
+                                    <p:ajax event="change" update=":#{p:component('totalMoney')}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{money.cmo}" />
+                        </p:column>
+
+                        <p:column headerText="Лечетное учреждение" filterBy="#{money.hosp}" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('MoneyTable').filter()" style="width:200px;" >
+                                    <f:selectItem itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{moneyGov.dictHosp.values()}" />
+                                    <p:ajax event="change" update=":#{p:component('totalMoney')}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{money.hosp}" />
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:tab>
+            </p:accordionPanel>
+
+            <p:accordionPanel activeIndex="-1" style="width: 70%; margin: 0 auto">
+                <p:tab title="Отобразить загрузку поликлиник">
+
+                    <p:outputLabel id="totalHospLoading" style="font-size: 20px; color: red; font-weight: bold"
+                                   value="Всего пациентов: #{moneyGov.totalHospLoading}"/>
+                    <br/>
+
+                    <p:dataTable scrollable="true" scrollHeight="600" filteredValue="#{moneyGov.filterHospLoading}"
+                                 var="hospLoading" value="#{moneyGov.hospLoading}" widgetVar="HospTable">
+
+                        <p:column headerText="Лечетное учреждение" filterBy="#{hospLoading.hosp}" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('HospTable').filter()" style="width:200px;" >
+                                    <f:selectItem itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{moneyGov.dictHosp.values()}" />
+                                    <p:ajax event="change" update=":#{p:component('totalHospLoading')}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{hospLoading.hosp}" />
+                        </p:column>
+
+                        <p:column headerText="Количество пациентов" sortBy="#{hospLoading.count}">
+                            <h:outputText value="#{hospLoading.count}"/>
+                        </p:column>
+
+                        <p:column headerText="Процентное соотношение" sortBy="#{hospLoading.percent}">
+                            <h:outputText value="#{hospLoading.percent}"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:tab>
+            </p:accordionPanel>
+            
+            <p:accordionPanel activeIndex="-1" style="width: 70%; margin: 0 auto">
+                <p:tab title="Отобразить загрузку врачей">
+
+                    <p:outputLabel id="totalDocLoading" style="font-size: 20px; color: red; font-weight: bold"
+                                   value="Всего пациентов: #{moneyGov.totalDocLoading}"/>
+                    <br/>
+
+                    <p:dataTable scrollable="true" scrollHeight="600" filteredValue="#{moneyGov.filterDocLoading}"
+                                 var="docLoading" value="#{moneyGov.docLoading}" widgetVar="DocTable">
+
+                        <p:column headerText="Категория врача" filterBy="#{docLoading.cat}" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('DocTable').filter()" style="width:200px;" >
+                                    <f:selectItem itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{moneyGov.dictCat.values()}" />
+                                    <p:ajax event="change" update=":#{p:component('totalDocLoading')}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{docLoading.cat}" />
+                        </p:column>
+
+                        <p:column headerText="Количество пациентов" sortBy="#{docLoading.count}">
+                            <h:outputText value="#{docLoading.count}"/>
+                        </p:column>
+
+                        <p:column headerText="Процентное соотношение" sortBy="#{docLoading.percent}">
+                            <h:outputText value="#{docLoading.percent}"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:tab>
+            </p:accordionPanel>
+
+        </h:form>
     </h:body>
 </html>
 

@@ -146,7 +146,7 @@
 
             <p:outputPanel id="showStuff" >
                 <p:panel rendered="#{hospital.showStuff}">
-                    <p:dataTable var="doc" value="#{listDoctors.doctors}" widgetVar="docTable">
+                    <p:dataTable var="doc" value="#{listDoctors.doctors}" filteredValue="#{listDoctors.filteredDoctors}" widgetVar="docTable">
 
                         <p:column headerText="Категория" filterMatchMode="contains" filterBy="#{doc.cat}" sortBy="#{doc.cat}">
                             <h:outputText value="#{doc.cat}" />

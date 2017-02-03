@@ -29,6 +29,7 @@ public class Doctor implements Serializable {
     private String selectedDateString = "";
     private List<PatientItem> patients;
     private PatientItem selectedPatient;
+    private String isHol="";
 
     @PostConstruct
     public void init() {
@@ -131,78 +132,86 @@ public class Doctor implements Serializable {
         ArrayList t16_20 = db.queryField("t16_20");
         ArrayList t16_40 = db.queryField("t16_40");
 
+        if (dates.size() == 0){
+            setIsHol("нет пациентов");
+        }
         for (int i = 0; i < dates.size(); i++) {
-            if (t08_00.get(i) != null) {
+            if ((t08_00.get(i) != null) && (t08_00.get(i).toString().equals("true"))) {
                 times.add("08_00");
             }
-            if (t08_20.get(i) != null) {
+            if ((t08_20.get(i) != null) && (t08_20.get(i).toString().equals("true"))){
                 times.add("08_20");
             }
-            if (t08_40.get(i) != null) {
+            if ((t08_40.get(i) != null) && (t08_40.get(i).toString().equals("true"))){
                 times.add("08_40");
             }
-            if (t09_00.get(i) != null) {
+            if ((t09_00.get(i) != null) && (t09_00.get(i).toString().equals("true"))){
                 times.add("09_00");
             }
-            if (t09_20.get(i) != null) {
+            if ((t09_20.get(i) != null) && (t09_20.get(i).toString().equals("true"))){
                 times.add("09_20");
             }
-            if (t09_40.get(i) != null) {
+            if ((t09_40.get(i) != null) && (t09_40.get(i).toString().equals("true"))){
                 times.add("09_40");
             }
-            if (t10_00.get(i) != null) {
+            if ((t10_00.get(i) != null) && (t10_00.get(i).toString().equals("true"))){
                 times.add("10_00");
             }
-            if (t10_20.get(i) != null) {
+            if ((t10_20.get(i) != null) && (t10_20.get(i).toString().equals("true"))){
                 times.add("10_20");
             }
-            if (t10_40.get(i) != null) {
+            if ((t10_40.get(i) != null) && (t10_40.get(i).toString().equals("true"))){
                 times.add("10_40");
             }
-            if (t11_00.get(i) != null) {
+            if ((t11_00.get(i) != null) && (t11_00.get(i).toString().equals("true"))){
                 times.add("11_00");
             }
-            if (t11_20.get(i) != null) {
+            if ((t11_20.get(i) != null) && (t11_20.get(i).toString().equals("true"))){
                 times.add("11_20");
             }
-            if (t11_40.get(i) != null) {
+            if ((t11_40.get(i) != null) && (t11_40.get(i).toString().equals("true"))){
                 times.add("11_40");
             }
-            if (t12_00.get(i) != null) {
+            if ((t12_00.get(i) != null) && (t12_00.get(i).toString().equals("true"))){
                 times.add("12_00");
             }
-            if (t12_20.get(i) != null) {
+            if ((t12_20.get(i) != null) && (t12_20.get(i).toString().equals("true"))){
                 times.add("12_20");
             }
-            if (t12_40.get(i) != null) {
+            if ((t12_40.get(i) != null) && (t12_40.get(i).toString().equals("true"))){
                 times.add("12_40");
             }
-            if (t14_00.get(i) != null) {
+            if ((t14_00.get(i) != null) && (t14_00.get(i).toString().equals("true"))){
                 times.add("14_00");
             }
-            if (t14_20.get(i) != null) {
+            if ((t14_20.get(i) != null) && (t14_20.get(i).toString().equals("true"))){
                 times.add("14_20");
             }
-            if (t14_40.get(i) != null) {
+            if ((t14_40.get(i) != null) && (t14_40.get(i).toString().equals("true"))){
                 times.add("14_40");
             }
-            if (t15_00.get(i) != null) {
+            if ((t15_00.get(i) != null) && (t15_00.get(i).toString().equals("true"))){
                 times.add("15_00");
             }
-            if (t15_20.get(i) != null) {
+            if ((t15_20.get(i) != null) && (t15_20.get(i).toString().equals("true"))){
                 times.add("15_20");
             }
-            if (t15_40.get(i) != null) {
+            if ((t15_40.get(i) != null) && (t15_40.get(i).toString().equals("true"))){
                 times.add("15_40");
             }
-            if (t16_00.get(i) != null) {
+            if ((t16_00.get(i) != null) && (t16_00.get(i).toString().equals("true"))){
                 times.add("16_00");
             }
-            if (t16_20.get(i) != null) {
+            if ((t16_20.get(i) != null) && (t16_20.get(i).toString().equals("true"))){
                 times.add("16_20");
             }
-            if (t16_40.get(i) != null) {
+            if ((t16_40.get(i) != null) && (t16_40.get(i).toString().equals("true"))){
                 times.add("16_40");
+            }
+            if ((t16_40.get(i) != null) && (t16_40.get(i).toString().equals("false"))){
+                setIsHol("Выходной");
+            }else{
+                setIsHol("");
             }
         }
 
@@ -253,4 +262,13 @@ public class Doctor implements Serializable {
         
         selectedPatient = null;
     }
+
+    public void setIsHol(String isHol) {
+        this.isHol = isHol;
+    }
+
+    public String getIsHol() {
+        return isHol;
+    }
+    
 }

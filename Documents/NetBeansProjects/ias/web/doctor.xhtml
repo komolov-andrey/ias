@@ -26,6 +26,7 @@
                 <tr style="vertical-align: top">
                     <td>
                         <p:outputLabel style="font-size: 25px" id="d">Пациенты на выбранную дату:  #{doctor.selectedDateString}</p:outputLabel>
+                        <p:outputLabel style="font-size: 25px; color: red" id="hol" value=" #{doctor.isHol}"/>
 
                         <p:dataTable id="table2" scrollable="true" scrollHeight="700" style="width: 950px" var="patients" value="#{doctor.patients}"
                                      widgetVar="VisitTable" selection="#{doctor.selectedPatient}" selectionMode="single" rowKey="#{patients.id}">
@@ -52,7 +53,7 @@
                     </td>
                     <td>
                         <p:calendar value="#{doctor.selectedDate}" mode="inline">
-                            <p:ajax event="dateSelect" update="table2, d" listener="#{doctor.init()}"/>
+                            <p:ajax event="dateSelect" update="table2, d, hol" listener="#{doctor.init()}"/>
                         </p:calendar>
                     </td>
                 </tr>

@@ -200,7 +200,7 @@ public class Record implements Serializable {
                 FacesMessage msg = new FacesMessage("Заявка принята");
                 FacesContext.getCurrentInstance().addMessage(null, msg);
             } else {
-                db.qeuryRequest("select from Appoinments where date in DATE('" + d + " 00:00:00') AND t" + t + " = true;");
+                db.qeuryRequest("select from Appoinments where date in DATE('" + d + " 00:00:00') AND (t" + t + " = true OR t" + t + " = false);");
                 ArrayList appoinmentTime = db.queryField("t" + t);
                 if (appoinmentTime.size() == 0) {
                     db.qeuryRun("INSERT INTO Appoinments SET id_regs = " + User.getId_regs() + ", date = DATE('" + d + " 00:00:00'), id_doctor = " + id_doc + ", t" + t + " = true;");

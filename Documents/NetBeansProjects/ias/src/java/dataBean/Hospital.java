@@ -37,7 +37,7 @@ public class Hospital implements Serializable {
     private ArrayList<String> doctors;
     private String selectedDateString;
     private Date selectedDate;
-    
+
     private static boolean showStream = false;
     private static boolean showStuff = false;
     private static boolean showMoney = false;
@@ -237,10 +237,14 @@ public class Hospital implements Serializable {
                             + "t08_00, t08_20, t08_40, t09_00, t09_20, t09_40, t10_00, t10_20, t10_40, t11_00, t11_20, t11_40, "
                             + "t12_00, t12_20, t12_40, t14_00, t14_20, t14_40, t15_00, t15_20, t15_40, t16_00, t16_20, t16_40) "
                             + "VALUES (DATE('" + getSelectedDateString() + " 00:00:00'), " + id_doc + ", null, "
-                                    + "false, false, false, false, false, false, false, false, false, false, false, false, "
-                                    + "false, false, false, false, false, false, false, false, false, false, false, false);");
+                            + "false, false, false, false, false, false, false, false, false, false, false, false, "
+                            + "false, false, false, false, false, false, false, false, false, false, false, false);");
                 } else {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Есть клиенты", ""));
+                    if (db.queryField("t08_00").get(0).toString().equals("false")) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Выходной уже проставлен", ""));
+                    } else {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Есть клиенты", ""));
+                    }
                 }
             }
         } catch (Exception e) {
@@ -273,17 +277,20 @@ public class Hospital implements Serializable {
     public static void setShowMoney(boolean showMoney) {
         Hospital.showMoney = showMoney;
     }
-    public void showStream(){
+
+    public void showStream() {
         setShowStream(true);
         setShowMoney(false);
         setShowStuff(false);
     }
-    public void showStuff(){
+
+    public void showStuff() {
         setShowStream(false);
         setShowMoney(false);
         setShowStuff(true);
     }
-    public void showMoney(){
+
+    public void showMoney() {
         setShowStream(false);
         setShowMoney(true);
         setShowStuff(false);

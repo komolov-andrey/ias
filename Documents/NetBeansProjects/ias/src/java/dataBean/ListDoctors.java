@@ -21,6 +21,7 @@ import list.DoctorsItem;
 public class ListDoctors implements Serializable {
 
     private List<DoctorsItem> doctors;
+    private List<DoctorsItem> filteredDoctors;
     Map<String, Integer> dictDoc = new HashMap<String, Integer>();
 
     @PostConstruct
@@ -89,4 +90,13 @@ public class ListDoctors implements Serializable {
     public void setDoctors(List<DoctorsItem> doctors) {
         this.doctors = doctors;
     }
+
+    public List<DoctorsItem> getFilteredDoctors() {
+        return filteredDoctors;
+    }
+
+    public void setFilteredDoctors(List<DoctorsItem> filteredDoctors) {
+        this.filteredDoctors = filteredDoctors;
+    }
+    
 }
