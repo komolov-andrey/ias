@@ -153,7 +153,7 @@ public class FilterVisits implements Serializable {
         String nameDoc;
         String nameCat;
         for (int i = 0; i < ish_dataVisit.size(); i++) {
-            
+
             String dateVisit = df.format(ish_dataVisit.get(i));
             nameHosp = ish_hospVisit.get(i).toString();
             nameHosp = nameHosp.substring(1, nameHosp.length() - 1);
@@ -175,7 +175,12 @@ public class FilterVisits implements Serializable {
             }
 
             String tarif = yearVisit + cat_pat + cat_doc + dictHospCat.get(nameHosp);
-            dataVisit.add(new VisitItem(dateVisit, dictHosp.get(nameHosp), s, dictCat.get(cat_doc), dictTarif.get(tarif)));
+            String t = dictTarif.get(tarif);
+            if (t == null) {
+                dataVisit.add(new VisitItem(dateVisit, dictHosp.get(nameHosp), s, dictCat.get(cat_doc), "0"));
+            } else {
+                dataVisit.add(new VisitItem(dateVisit, dictHosp.get(nameHosp), s, dictCat.get(cat_doc), t));
+            }
         }
         setFilteredVisits(dataVisit);
         return dataVisit;
@@ -202,6 +207,7 @@ public class FilterVisits implements Serializable {
     public List<VisitItem> getFilteredVisits() {
         return filteredVisits;
     }
+
     public static List<VisitItem> getFilteredVisitsForGraph() {
         return filteredVisits;
     }
@@ -218,7 +224,7 @@ public class FilterVisits implements Serializable {
     public void setTotal() {
         int sum = 0;
         for (int i = 0; i < getFilteredVisits().size(); i++) {
-           sum +=  getFilteredVisits().get(i).getCost();           
+            sum += getFilteredVisits().get(i).getCost();
         }
         this.total = sum;
     }
